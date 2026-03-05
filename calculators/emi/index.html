@@ -4,7 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced EMI Calculator</title>
+        <title>Loan EMI Calculator with Prepayment | Indian Financial Year Loan Tracker</title>
+    <meta name="description" content="Advanced Home Loan Savings Calculator with Prepayment capabilities. Track your Indian Financial Year loan amortization instantly.">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "FinCalcPro EMI Calculator",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "WebBrowser",
+      "description": "Calculates Equated Monthly Installments for loans, including prepayment saving analysis and Indian Financial Year aggregations."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Does prepayment reduce tenure or EMI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "By default, making extra prepayments reduces the overall tenure of your loan, keeping your monthly EMI the same but eliminating future interest payments."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How is interest calculated in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Interest is calculated on a daily reducing balance or monthly reducing balance, heavily favoring individuals who prepay principal early."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the PR(1+R)^N formula?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It is the standard algebraic formula banks use to guarantee a flat payment schedule across an amortizing loan."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why use the Indian Financial Year?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For Indian income tax reporting (like Section 80C and 24b), interest and principal deductions must be aggregated strictly from April 1st to March 31st."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Are these calculations perfectly exact?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "They are highly accurate mathematical models, though your specific bank may use minor internal rounding rules."
+        }
+      }]
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../style.css">
 </head>
@@ -46,23 +99,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Principal Amount (₹)</label>
-                        <input type="number" id="principal" value="1000000"
+                        <input type="number" id="principal" aria-label="Principal Amount" value="1000000"
                             class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                             oninput="calculate()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Annual Interest Rate (%)</label>
-                        <input type="number" id="rate" value="8.5" step="0.1"
+                        <input type="number" id="rate" aria-label="Annual Interest Rate" value="8.5" step="0.1"
                             class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                             oninput="calculate()">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Tenure</label>
                         <div class="flex">
-                            <input type="number" id="tenure" value="10"
+                            <input type="number" id="tenure" aria-label="Tenure" value="10"
                                 class="w-full px-4 py-2 border border-r-0 border-slate-300 rounded-l-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                                 oninput="calculate()">
-                            <select id="tenureType"
+                            <select id="tenureType" aria-label="Tenure Type"
                                 class="bg-slate-50 border border-slate-300 rounded-r-lg px-3 py-2 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                                 onchange="calculate()">
                                 <option value="years">Years</option>
@@ -73,7 +126,7 @@
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Monthly Extra Payment (₹) <span
                                 class="text-xs text-indigo-500 font-normal">(Optional)</span></label>
-                        <input type="number" id="monthlyExtra" value="0"
+                        <input type="number" id="monthlyExtra" aria-label="Monthly Extra Payment" value="0"
                             class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                             oninput="calculate()">
                     </div>
@@ -83,17 +136,17 @@
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Start Month & Year</label>
                         <div class="flex gap-2">
-                            <select id="startMonth"
+                            <select id="startMonth" aria-label="Start Month"
                                 class="w-1/2 bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none"
                                 onchange="renderSchedule()"></select>
-                            <input type="number" id="startYear"
+                            <input type="number" id="startYear" aria-label="Start Year"
                                 class="w-1/2 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
                                 oninput="renderSchedule()">
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Calendar Grouping</label>
-                        <select id="calendarType"
+                        <select id="calendarType" aria-label="Calendar Grouping"
                             class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none"
                             onchange="renderSchedule()">
                             <option value="standard">Standard (Jan - Dec)</option>
@@ -186,51 +239,95 @@
         </div>
     </main>
 
-    
-    <!-- SEO Content Section -->
-    <article class="max-w-7xl mx-auto px-4 py-8 mb-8 text-slate-700 bg-white shadow-sm border border-slate-200 mt-2 rounded-xl">
-        <h2 class="text-2xl font-bold text-slate-900 mb-4">How to Use the FinCalcPro Advanced EMI Calculator</h2>
+    <!-- SEO Content & Blog Section -->
+    <article class="max-w-7xl mx-auto px-4 py-12 mb-8 mt-4">
         
-        <div class="prose prose-slate max-w-none">
-            <p>Welcome to the most advanced EMI calculator designed to help you analyze your property, car, or personal loans. Calculating Equated Monthly Installments (EMI) correctly is critical before making huge financial commitments like a mortgage. It helps you understand exactly how much of your monthly layout goes towards paying down debt (Principal) versus how much is strictly bank profit (Interest). Let's dive into all the tools we've provided above.</p>
-            
-            <h3 class="text-xl font-semibold mt-6 mb-2">1. The Basic EMI Calculation</h3>
-            <p>Your Equated Monthly Installment is calculated using the standard banking formula: <strong>E = P x R x (1+R)^N / [(1+R)^N-1]</strong>. When you input your Principal Amount, Annual Interest Rate, and Tenure (in Months or Years), we instantly compute generating an interactive table showing every single payment over your life of loan for complete transparency—absolutely no math needed on your end.</p>
-            
-            <h3 class="text-xl font-semibold mt-6 mb-2">2. The Power of Monthly and One-Time Prepayments</h3>
-            <p>Our most requested feature is the ability to map extra payments. Often called <em>prepayments</em>, even paying an extra amount per month on a standard mortgage can slash years off your mortgage and save you thousands in interest. The tool above features a <strong>"Monthly Extra Payment"</strong> input. When you use this input, you'll immediately trigger our "Savings Summary" box, which dynamically calculates and displays two things: exactly how much total interest you've saved and precisely how many months your loan term has been shortened.</p>
-            <p>Additionally, you'll see small input boxes mapped to <em>every single row</em> of the amortization schedule. If you get a bonus in December and want to inject a large one-time lump sum payment, drop it straight into that specific month's row. The schedule will instantly reflow the remaining balance and subsequent interest costs for all following years!</p>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <!-- Left Side: Table of Contents & Blog Posts -->
+            <div class="lg:col-span-8">
+                <!-- Table of Contents -->
+                <div class="bg-indigo-50 p-6 rounded-xl mb-12 border border-indigo-100 shadow-sm">
+                    <h2 class="text-xl font-bold text-slate-800 mb-4 uppercase tracking-wide flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+                        Table of Contents
+                    </h2>
+                    <ul class="space-y-3 text-indigo-700">
+                        <li><a href="#article1" class="hover:underline font-medium flex items-start gap-2"><span class="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Understanding EMI: The Math Behind Your Monthly Payments</a></li>
+                        <li><a href="#article2" class="hover:underline font-medium flex items-start gap-2"><span class="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-indigo-400"></span> The Power of Prepayment: How Even Small Extra Payments Save Lakhs in Interest</a></li>
+                        <li><a href="#article3" class="hover:underline font-medium flex items-start gap-2"><span class="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Standard vs. Indian Financial Year: Why Your Loan Tracking Matters</a></li>
+                        <li><a href="#faq" class="hover:underline font-medium flex items-start gap-2"><span class="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-indigo-400"></span> Frequently Asked Questions</a></li>
+                    </ul>
+                </div>
 
-            <h3 class="text-xl font-semibold mt-6 mb-2">3. Standard vs. Indian Financial Year Toggles</h3>
-            <p>Calculating the total interest you've paid within a single tax year is critical for utilizing home loan tax deductions. Standard global calculators aggregate totals from January through December. However, our calculator features an <strong>Indian FY (Apr-Mar)</strong> toggle explicitly to cater to Indian home loan laws. Flipping the toggle reorganizes all the sub-total summary rows in your amortization schedule so you can quickly pull out exactly what you owe (or have paid) directly between April 1st and March 31st each year.</p>
-            
-            <h3 class="text-xl font-semibold mt-6 mb-2">Mobile Responsiveness</h3>
-            <p>This web tool relies strictly on highly optimized JavaScript processing on <em>your</em> browser, meaning it works instantly whether you're using a desktop or mobile phone without loading screens. Keep checking back, as we strive to implement robust new calculators over time focused on personal wealth and debt elimination strategies!</p>
+                <div class="prose prose-slate prose-lg max-w-none text-slate-700">
+                    
+                    <section id="article1" class="mb-14 scroll-mt-6">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-5">Understanding EMI: The Math Behind Your Monthly Payments</h2>
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&auto=format&fit=crop" alt="Calculator showing financial mathematics" class="w-full h-64 object-cover rounded-xl shadow-sm mb-6">
+                        <p>When taking out a mortgage or personal loan, the lending institution calculates an Equated Monthly Installment (EMI) that remains entirely flat over the duration of your contract. Understanding exactly how this number is mathematically formulated is one of the most vital foundations of personal finance, especially when looking to optimize your debt.</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-800">The Standard PR(1+R)^N Formula</h3>
+                        <p>Banks universally employ the compound interest amortization equation: <strong>E = P &times; [R &times; (1+R)^N] &divide; [(1+R)^N-1]</strong>. In this equation, 'E' is the final Equated Monthly Installment. 'P' represents the Principal (the sheer original amount borrowed). 'R' represents the monthly interest rate (your annual interest essentially divided by twelve), and 'N' is the total number of physical months in the lifespan of your mortgage term.</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-800">How Payments Are Structured Over Time</h3>
+                        <p>Your EMI is actually a dynamically shifting ratio. When you write your very first check to the bank, the majority of that payment does not go toward the actual house; it solely pays the compounding interest accrued against your massive initial balance. Conversely, merely a microscopic fraction actually pays down the principal.</p>
+                        <p>However, as you relentlessly continue paying across twenty or thirty years, the internal scale tips heavily. By the conclusion of your contract, almost 100% of your EMI is directly reducing the principal since the overarching interest demand has drastically plummeted. Our real-time calculator above perfectly visualizes this sliding mathematical scale directly in the table data.</p>
+                    </section>
+
+                    <section id="article2" class="mb-14 scroll-mt-6">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-5">The Power of Prepayment: How Even Small Extra Payments Save Lakhs in Interest</h2>
+                        <p>Borrowers wrongly assume they are strictly locked into paying exactly the EMI dictated by the bank. In reality, aggressively applying extra liquid cash directly against your outstanding loan balance—also known as prepaying—is the absolute most lucrative, risk-free investment available on the market, especially with current interest rates.</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-800">The Magic of Principal Reduction</h3>
+                        <p>Unlike an ordinary EMI payment which gets severely cannibalized by that month's required interest charge, an extra prepayment maliciously bypasses the interest check completely. Every singular dollar (or rupee) you prepay mathematically obliterates exactly one unit of your core principal balance. Because future interest is calculated rigidly against that shrinking core, a massive cascading effect begins.</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-800">Saving Massive Amounts of Money</h3>
+                        <p>By utilizing the "Monthly Extra Payment" input panel in our tool, you can visibly test this phenomenon. Simply adding an extra ₹5000 a month to a massive ₹50 Lakh home loan can successfully slice up to five entire years off your grueling thirty-year timeline. More astonishingly, completely wiping out those terminal five years ensures you successfully avoid paying multiple lakhs of rupees to the corporate bank in pure, unadulterated profit.</p>
+                    </section>
+
+                    <section id="article3" class="mb-14 scroll-mt-6">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-5">Standard vs. Indian Financial Year: Why Your Loan Tracking Matters</h2>
+                        <p>For most global tracking mechanics, utilizing the standard Gregorian calendar (January 1st through December 31st) is perfectly sufficient. However, for specialized fiscal strategies, banking regulations, and massive tax deduction scenarios strictly within India, that standard calendar is thoroughly practically useless.</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-800">Defining the April-March Cycle</h3>
+                        <p>The Government of India officially dictates that all financial, corporate, and individual accounting legally operates on the Indian Financial Year (FY) cycle, which strictly begins on April 1st and closes perfectly on March 31st. Consequently, when filing an ITR (Income Tax Return), calculating capital gains, or claiming severe deductions, you must aggregate your metrics solely inside this highly specific 12-month window.</p>
+                        <h3 class="text-xl font-semibold mt-6 mb-3 text-slate-800">Securing Your 80C and 24(b) Tax Deductions</h3>
+                        <p>If you have an active home loan anywhere in India, you are generously entitled to massive tax deductions specifically under Section 80C (for your principal successfully repaid) and Section 24(b) (for your total combined interest strictly paid). Using our unique toggle at the top of the dashboard seamlessly restructures your complex amortization table into perfectly clean April-March blocks, reliably empowering you to immediately report impeccably accurate numbers directly to your tax accountant without complicated or error-prone manual math.</p>
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- Right Side: Sticky FAQ -->
+            <div class="lg:col-span-4 relative">
+                <section id="faq" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 sticky top-6">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Frequently Asked Questions
+                    </h2>
+                    <div class="space-y-6 divide-y divide-slate-100">
+                        <div class="pt-2">
+                            <h3 class="text-base font-bold text-slate-800 mb-2 leading-snug">Does prepayment reduce tenure or EMI?</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">By default, making extra prepayments heavily reduces the overall length (tenure) of your loan timeline while your bank safely maintains your previously contracted EMI amount.</p>
+                        </div>
+                        <div class="pt-4">
+                            <h3 class="text-base font-bold text-slate-800 mb-2 leading-snug">How is interest calculated in India?</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">Most loans in India specifically utilize a "monthly reducing balance" or occasionally a "daily reducing balance" mechanism, vastly favoring individuals who prepay quickly.</p>
+                        </div>
+                        <div class="pt-4">
+                            <h3 class="text-base font-bold text-slate-800 mb-2 leading-snug">What is the PR(1+R)^N formula?</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">This algebraic equation is the universal standard formula successfully employed globally by financial institutions to brutally perfectly flatten out payments.</p>
+                        </div>
+                        <div class="pt-4">
+                            <h3 class="text-base font-bold text-slate-800 mb-2 leading-snug">Why use the Indian Financial Year?</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">The Indian Government rigidly ignores January-December aggregates. Tracking data perfectly from April 1 to March 31 ensures your financial submission safely triggers maximum legal relief.</p>
+                        </div>
+                        <div class="pt-4">
+                            <h3 class="text-base font-bold text-slate-800 mb-2 leading-snug">Are these calculations exact?</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">They are highly accurate models, though your specific lender may use minor proprietary rounding rules or subtly shifting floating index rates.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
+
     </article>
 
-        <!-- Guides Section -->
-    <div class="max-w-7xl mx-auto px-4 w-full mb-12 mt-6">
-        <h2 class="text-2xl font-bold text-slate-900 mb-6 border-b pb-2">Financial Guides & Resources</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <a href="../../guides/emi-formula.html" class="bg-white p-5 rounded-xl border border-slate-200 hover:shadow-md hover:border-indigo-400 transition-all">
-                <h3 class="font-bold text-indigo-700 mb-2">How EMI is Calculated</h3>
-                <p class="text-sm text-slate-600">A full breakdown of the math and formulas governing your loan.</p>
-            </a>
-            <a href="../../guides/home-loan-prepayment.html" class="bg-white p-5 rounded-xl border border-slate-200 hover:shadow-md hover:border-indigo-400 transition-all">
-                <h3 class="font-bold text-indigo-700 mb-2">Prepayment Benefits</h3>
-                <p class="text-sm text-slate-600">How to save thousands by making small extra payments against your principal.</p>
-            </a>
-            <a href="../../guides/financial-year.html" class="bg-white p-5 rounded-xl border border-slate-200 hover:shadow-md hover:border-indigo-400 transition-all">
-                <h3 class="font-bold text-indigo-700 mb-2">Indian Financial Year</h3>
-                <p class="text-sm text-slate-600">Understand the difference for critical tax filing metrics and aggregating rows.</p>
-            </a>
-            <a href="../../faq.html" class="bg-white p-5 rounded-xl border border-slate-200 hover:shadow-md hover:border-indigo-400 transition-all">
-                <h3 class="font-bold text-indigo-700 mb-2">Frequently Asked Qs</h3>
-                <p class="text-sm text-slate-600">Answers to fixed vs floating rates, data privacy, and lender penalty queries.</p>
-            </a>
-        </div>
-    </div>
     <!-- Ad Slot 3 (Bottom) -->
     <div class="max-w-7xl mx-auto w-full px-4 mb-8">
         <div class="ad-slot h-24 rounded-lg w-full" id="AD_SLOT_3">
