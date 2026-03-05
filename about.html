@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FinCalc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors">FinCalc <span
+                    class="text-indigo-200">EMI</span></a>
+        </div>
+    </nav>
+
+    <!-- Ad Slot 1 (Top) -->
+    <div class="max-w-3xl mx-auto w-full px-4 mt-6">
+        <div class="ad-slot h-24 rounded-lg w-full bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center text-slate-500 text-sm"
+            id="AD_SLOT_1">
+            <div class="text-center">[ AD_SLOT_1 ]<br><span class="text-xs">Responsive Top Leaderboard</span></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-4 py-12 flex-grow w-full">
+        <h1 class="text-3xl font-bold mb-6 text-slate-900">About Us</h1>
+        <div class="prose prose-slate max-w-none text-slate-700 space-y-4">
+            <p>Welcome to <strong>FinCalc</strong>, your number one source for all things related to financial
+                calculations. We're dedicated to giving you the very best loan and EMI calculation tools, with a focus
+                on speed, privacy, and accuracy.</p>
+
+            <h2 class="text-xl font-semibold mt-6 mb-3 text-slate-900">Our Mission</h2>
+            <p>Our mission is to empower individuals to make smart financial decisions by providing transparent,
+                easy-to-use tools that break down complicated loan metrics—empowering you to minimize interest and take
+                control of your amortization schedule.</p>
+
+            <h2 class="text-xl font-semibold mt-6 mb-3 text-slate-900">Why Choose Us?</h2>
+            <ul class="list-disc pl-5 mt-2 space-y-2">
+                <li><strong>Privacy First:</strong> Your financial data is calculated locally in your browser and never
+                    leaves your device.</li>
+                <li><strong>Advanced Prepayments:</strong> We dynamically handle one-time and recurring extra monthly
+                    payments, unlike basic standard calculators.</li>
+                <li><strong>Lightning Fast:</strong> No page reloads or loading spinners. Enter your data and
+                    immediately see your entire amortization schedule updated via vanilla javascript.</li>
+            </ul>
+
+            <p class="mt-8">We hope you enjoy our products as much as we enjoy offering them to you. If you have any
+                questions or comments, please don't hesitate to check our <a href="contact.html"
+                    class="text-indigo-600 hover:underline">Contact</a> page.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; <span id="currentYear"></span> FinCalc. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="about.html" class="text-white transition-colors">About Us</a>
+                <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+                <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+    <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+</body>
+
+</html>
