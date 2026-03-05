@@ -186,6 +186,29 @@
         </div>
     </main>
 
+    
+    <!-- SEO Content Section -->
+    <article class="max-w-7xl mx-auto px-4 py-8 mb-8 text-slate-700 bg-white shadow-sm border border-slate-200 mt-2 rounded-xl">
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">How to Use the FinCalcPro Advanced EMI Calculator</h2>
+        
+        <div class="prose prose-slate max-w-none">
+            <p>Welcome to the most advanced EMI calculator designed to help you analyze your property, car, or personal loans. Calculating Equated Monthly Installments (EMI) correctly is critical before making huge financial commitments like a mortgage. It helps you understand exactly how much of your monthly layout goes towards paying down debt (Principal) versus how much is strictly bank profit (Interest). Let's dive into all the tools we've provided above.</p>
+            
+            <h3 class="text-xl font-semibold mt-6 mb-2">1. The Basic EMI Calculation</h3>
+            <p>Your Equated Monthly Installment is calculated using the standard banking formula: <strong>E = P x R x (1+R)^N / [(1+R)^N-1]</strong>. When you input your Principal Amount, Annual Interest Rate, and Tenure (in Months or Years), we instantly compute generating an interactive table showing every single payment over your life of loan for complete transparency—absolutely no math needed on your end.</p>
+            
+            <h3 class="text-xl font-semibold mt-6 mb-2">2. The Power of Monthly and One-Time Prepayments</h3>
+            <p>Our most requested feature is the ability to map extra payments. Often called <em>prepayments</em>, even paying an extra amount per month on a standard mortgage can slash years off your mortgage and save you thousands in interest. The tool above features a <strong>"Monthly Extra Payment"</strong> input. When you use this input, you'll immediately trigger our "Savings Summary" box, which dynamically calculates and displays two things: exactly how much total interest you've saved and precisely how many months your loan term has been shortened.</p>
+            <p>Additionally, you'll see small input boxes mapped to <em>every single row</em> of the amortization schedule. If you get a bonus in December and want to inject a large one-time lump sum payment, drop it straight into that specific month's row. The schedule will instantly reflow the remaining balance and subsequent interest costs for all following years!</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">3. Standard vs. Indian Financial Year Toggles</h3>
+            <p>Calculating the total interest you've paid within a single tax year is critical for utilizing home loan tax deductions. Standard global calculators aggregate totals from January through December. However, our calculator features an <strong>Indian FY (Apr-Mar)</strong> toggle explicitly to cater to Indian home loan laws. Flipping the toggle reorganizes all the sub-total summary rows in your amortization schedule so you can quickly pull out exactly what you owe (or have paid) directly between April 1st and March 31st each year.</p>
+            
+            <h3 class="text-xl font-semibold mt-6 mb-2">Mobile Responsiveness</h3>
+            <p>This web tool relies strictly on highly optimized JavaScript processing on <em>your</em> browser, meaning it works instantly whether you're using a desktop or mobile phone without loading screens. Keep checking back, as we strive to implement robust new calculators over time focused on personal wealth and debt elimination strategies!</p>
+        </div>
+    </article>
+
     <!-- Ad Slot 3 (Bottom) -->
     <div class="max-w-7xl mx-auto w-full px-4 mb-8">
         <div class="ad-slot h-24 rounded-lg w-full" id="AD_SLOT_3">
@@ -193,19 +216,23 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
-            <div class="flex gap-4">
-                <a href="../../about.html" class="hover:text-white transition-colors">About Us</a>
+        <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-sm mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <p class="mb-2">&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+                <p class="text-xs text-slate-500 max-w-xl">Disclaimer: Calculations are for informational purposes only. Consult a financial professional before making financial decisions.</p>
+            </div>
+            <div class="flex flex-wrap justify-center md:justify-end gap-x-4 gap-y-2 mt-4 md:mt-0">
+                <a href="../../about.html" class="hover:text-white transition-colors">About</a>
                 <a href="../../contact.html" class="hover:text-white transition-colors">Contact</a>
-                <a href="../../privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="../../privacy.html" class="hover:text-white transition-colors">Privacy</a>
+                <a href="../../terms.html" class="hover:text-white transition-colors">Terms</a>
+                <a href="../../disclaimer.html" class="hover:text-white transition-colors">Disclaimer</a>
             </div>
         </div>
     </footer>
-
     <script src="script.js"></script>
+    <script>if(document.getElementById('currentYear')) document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
 </body>
-
 </html>
