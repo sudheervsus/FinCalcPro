@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tax Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Compare liability between the Old Tax Regime and New Tax Regime accurately. Calculate total income tax and view a detailed breakdown.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                    </path>
+                </svg>
+                FinCalcPro <span class="text-teal-300">Efficiency</span>
+            </a>
+            <div class="text-sm font-medium">Income Tax Calculator</div>
+        </div>
+    </nav>
+
+    <!-- Ad Slot 1 -->
+    <div class="max-w-7xl mx-auto w-full px-4 mt-6">
+        <div class="ad-slot h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm"
+            id="AD_SLOT_1">
+            <span>[ AdSense Top Banner ]</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-4 mb-6">
+                    <span class="p-2 bg-teal-100 text-teal-600 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-slate-800">Income & Deductions</h2>
+                </div>
+
+                <div class="space-y-8 flex flex-col gap-2">
+
+                    <!-- Gross Annual Income -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Gross Annual Income</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="incomeInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-teal-800 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="1500000" step="50000" oninput="syncSlider('income')">
+                            </div>
+                        </div>
+                        <input type="range" id="incomeSlider" min="300000" max="50000000" step="50000" value="1500000"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+                            oninput="syncInput('income')">
+                    </div>
+
+                    <!-- Applicable Deductions (Only for Old Regime) -->
+                    <div class="pt-4 border-t border-slate-100">
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Total Deductions (80C, 80D, HRA,
+                                etc.)</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="deductionInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-teal-800 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="150000" step="10000" oninput="syncSlider('deduction')">
+                            </div>
+                        </div>
+                        <input type="range" id="deductionSlider" min="0" max="1500000" step="10000" value="150000"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+                            oninput="syncInput('deduction')">
+                        <p class="text-[10px] text-slate-400 mt-1">These deductions do not apply under the New Tax
+                            Regime, apart from Standard Deduction.</p>
+                    </div>
+
+                    <div class="flex items-center mt-4">
+                        <input type="checkbox" id="salariedCheck"
+                            class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                            checked onchange="calculate()">
+                        <label for="salariedCheck" class="ml-2 text-sm font-medium text-slate-700">Salaried Individual
+                            (Applies flat ₹50,000 Standard Deduction)</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div
+                class="bg-teal-50 p-6 rounded-xl border border-teal-100 shadow-sm text-sm text-teal-900 leading-relaxed">
+                <p>This calculator is based on the <strong>FY 2023-24 (AY 2024-25) & later guidelines</strong> where the
+                    <strong>New Tax Regime</strong> is the default setting and includes proper marginal tax relief
+                    mapping ensuring 87A rebate applicability directly.</p>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <!-- Hero Output -->
+            <div class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center transition-all"
+                id="recommendationBlock">
+                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Recommended Option</p>
+                <p class="text-3xl lg:text-4xl font-extrabold text-teal-400 mb-2" id="regimeRecommendation">New Regime
+                </p>
+                <div class="inline-block bg-slate-800 px-3 py-1 rounded-full border border-slate-600">
+                    <p class="text-xs text-slate-300">Saves <span class="text-teal-400 font-bold"
+                            id="savingsAmountDisplay">₹0</span> in taxes</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <!-- Data breakdown Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div
+                        class="p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-col items-center shadow-sm">
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Old Regime Tax</p>
+                        <p class="text-xl font-bold text-slate-800 mt-1" id="oldTaxDisplay">₹0</p>
+                    </div>
+                    <div
+                        class="p-4 bg-teal-50 rounded-lg border border-teal-200 flex flex-col items-center shadow-sm relative overflow-hidden">
+                        <!-- Crown icon for winner -->
+                        <div id="newRegimeCrown"
+                            class="absolute -right-2 -top-2 text-teal-500 opacity-20 transform rotate-12">
+                            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z">
+                                </path>
+                            </svg>
+                        </div>
+                        <p class="text-xs font-semibold text-teal-700 uppercase relative z-10">New Regime Tax</p>
+                        <p class="text-xl font-bold text-teal-800 mt-1 relative z-10" id="newTaxDisplay">₹0</p>
+                    </div>
+                </div>
+
+                <!-- Bar Chart comparing the total tax -->
+                <div class="relative h-48 w-full flex justify-center items-center">
+                    <canvas id="taxChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
