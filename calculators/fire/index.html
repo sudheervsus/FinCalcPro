@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRE Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Calculate your Financial Independence Retire Early (FIRE) number and projection based on the 4% Safe Withdrawal Rate rule.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path>
+                </svg>
+                FinCalcPro <span class="text-purple-300">Future</span>
+            </a>
+            <div class="text-sm font-medium">FIRE Calculator</div>
+        </div>
+    </nav>
+
+    <!-- Ad Slot 1 -->
+    <div class="max-w-7xl mx-auto w-full px-4 mt-6">
+        <div class="ad-slot h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm"
+            id="AD_SLOT_1">
+            <span>[ AdSense Top Banner ]</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-4 mb-6">
+                    <span class="p-2 bg-purple-100 text-purple-600 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-slate-800">Your FIRE Profile</h2>
+                </div>
+
+                <div class="space-y-8 flex flex-col gap-2">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Current Age -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-purple-800">Current Age</label>
+                                <div class="relative">
+                                    <input type="number" id="ageInput"
+                                        class="w-20 pr-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-purple-800 outline-none focus:ring-1 focus:ring-purple-500"
+                                        value="28" oninput="syncSlider('age')">
+                                </div>
+                            </div>
+                            <input type="range" id="ageSlider" min="18" max="65" step="1" value="28"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                                oninput="syncInput('age')">
+                        </div>
+
+                        <!-- Safe Withdrawal Rate -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-purple-800">Safe Withdrawal Rate
+                                    (SWR)</label>
+                                <div class="relative">
+                                    <input type="number" id="swrInput"
+                                        class="w-20 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-purple-800 outline-none focus:ring-1 focus:ring-purple-500"
+                                        value="4.0" step="0.1" oninput="syncSlider('swr')">
+                                    <span class="absolute right-[-1.5rem] top-1 text-slate-500 hidden">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="swrSlider" min="2" max="10" step="0.1" value="4.0"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                                oninput="syncInput('swr')">
+                            <p class="text-[10px] text-slate-400 mt-1 text-right">Standard rule is 4%</p>
+                        </div>
+                    </div>
+
+                    <!-- Annual Expenses -->
+                    <div class="pt-4 border-t border-slate-100">
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-purple-800">Annual Living Expenses
+                                (Target)</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="expensesInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-purple-300 rounded text-right font-bold text-purple-800 outline-none focus:ring-1 focus:ring-purple-500"
+                                    value="1200000" step="10000" oninput="syncSlider('expenses')">
+                            </div>
+                        </div>
+                        <input type="range" id="expensesSlider" min="100000" max="10000000" step="10000" value="1200000"
+                            class="w-full h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                            oninput="syncInput('expenses')">
+                        <p class="text-[10px] text-slate-400 mt-1">This amount dictates your ultimate FIRE corpus size.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Pre-Retirement Phase -->
+            <div class="bg-purple-50 rounded-xl shadow-sm border border-purple-200 p-6 md:p-8">
+                <div class="flex items-center gap-2 border-b border-purple-200 pb-4 mb-6">
+                    <span class="p-2 bg-purple-200 text-purple-800 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-purple-900">Wealth Aggregation Setup</h2>
+                </div>
+
+                <div class="space-y-8 flex flex-col gap-2">
+
+                    <!-- Monthly Investment -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-purple-900">Monthly Investments
+                                (SIPs)</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="monthlyInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-purple-300 rounded text-right font-bold text-purple-800 outline-none focus:ring-1 focus:ring-purple-500"
+                                    value="50000" step="1000" oninput="syncSlider('monthly')">
+                            </div>
+                        </div>
+                        <input type="range" id="monthlySlider" min="0" max="1000000" step="1000" value="50000"
+                            class="w-full h-2 bg-purple-300 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                            oninput="syncInput('monthly')">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Current Portfolio -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-purple-900 text-xs">Existing Portfolio
+                                    (₹)</label>
+                                <div class="relative">
+                                    <input type="number" id="portfolioInput"
+                                        class="w-24 px-1 py-1 bg-white border border-purple-300 rounded text-right font-bold text-purple-800 outline-none focus:ring-1 focus:ring-purple-500"
+                                        value="1000000" step="50000" oninput="syncSlider('portfolio')">
+                                </div>
+                            </div>
+                            <input type="range" id="portfolioSlider" min="0" max="50000000" step="50000" value="1000000"
+                                class="w-full h-2 bg-purple-300 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                                oninput="syncInput('portfolio')">
+                        </div>
+
+                        <!-- Expected Return Rate (Real) -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-purple-900 text-xs">Real ROI (After
+                                    Inflation %)</label>
+                                <div class="relative">
+                                    <input type="number" id="roiInput"
+                                        class="w-20 px-1 py-1 bg-white border border-purple-300 rounded text-right font-bold text-purple-800 outline-none focus:ring-1 focus:ring-purple-500"
+                                        value="7.0" step="0.1" oninput="syncSlider('roi')">
+                                </div>
+                            </div>
+                            <input type="range" id="roiSlider" min="1" max="15" step="0.1" value="7.0"
+                                class="w-full h-2 bg-purple-300 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                                oninput="syncInput('roi')">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm text-sm text-slate-700 leading-relaxed">
+                <p>The <strong>FIRE Matrix</strong> calculates your independence entirely in <em>"Real"
+                        (inflation-adjusted)</em> currency. This means the target corpus and your wealth compounding
+                    negate inflation inherently to give you purchasing-power-parity answers directly.</p>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <!-- Hero Output -->
+            <div id="targetReachedBlock"
+                class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center">
+                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Financial Independence Age
+                </p>
+                <div class="flex items-end justify-center gap-2">
+                    <p class="text-4xl lg:text-5xl font-extrabold text-purple-400" id="fiAgeDisplay">0</p>
+                    <p class="text-xl text-slate-400 mb-1">Yrs</p>
+                </div>
+                <!-- Mini Target Info -->
+                <div class="mt-4 pt-4 border-t border-slate-800 flex justify-center items-center gap-6">
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Yrs To Target</p>
+                        <p class="text-lg font-bold text-slate-300" id="yrsToTargetDisplay">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <!-- Data breakdown -->
+                <div class="p-4 bg-purple-50 border border-purple-100 rounded-lg mb-6 text-center">
+                    <p class="text-xs text-purple-600 font-bold uppercase mb-1">Total Target FIRE Corpus required</p>
+                    <p class="text-2xl font-black text-purple-800" id="targetCorpusDisplay">₹0</p>
+                    <p class="text-[10px] text-purple-400 mt-1">Calculated as (Annual Expenses / SWR %)</p>
+                </div>
+
+                <!-- Line Chart showing the convergence -->
+                <div class="relative h-64 w-full flex justify-center items-center">
+                    <canvas id="fireChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
