@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPF Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Calculate your Public Provident Fund (PPF) maturity amount, total interest earned, and yearly balance over the 15-year lock-in period.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                    </path>
+                </svg>
+                FinCalcPro <span class="text-teal-300">Savings</span>
+            </a>
+            <div class="text-sm font-medium">PPF Calculator</div>
+        </div>
+    </nav>
+
+    <!-- Ad Slot 1 -->
+    <div class="max-w-7xl mx-auto w-full px-4 mt-6">
+        <div class="ad-slot h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm"
+            id="AD_SLOT_1">
+            <span>[ AdSense Top Banner ]</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-4 mb-6">
+                    <span class="p-2 bg-teal-100 text-teal-600 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-slate-800">PPF Investment Details</h2>
+                </div>
+
+                <div class="space-y-8 flex flex-col gap-2">
+                    <!-- Yearly Investment -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Yearly Investment</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="yearlyInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-teal-800 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="150000" step="500" oninput="syncSlider('yearly')">
+                            </div>
+                        </div>
+                        <input type="range" id="yearlySlider" min="500" max="150000" step="500" value="150000"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                            oninput="syncInput('yearly')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹500 (Min)</span>
+                            <span>₹1.5L (Max)</span>
+                        </div>
+                    </div>
+
+                    <!-- Interest Rate -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Current PPF Interest Rate</label>
+                            <div class="relative">
+                                <input type="number" id="rateInput"
+                                    class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-slate-700 outline-none cursor-not-allowed"
+                                    value="7.1" step="0.1" disabled>
+                                <span class="absolute right-3 top-1 text-slate-400">%</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1">PPF rates are set by the govt. Currently fixed at
+                            ~7.1% p.a.</p>
+                    </div>
+
+                    <!-- Tenure -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Total Tenure (Years)</label>
+                            <div class="relative">
+                                <input type="number" id="tenureInput"
+                                    class="w-20 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-slate-700 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="15" step="5" oninput="syncSlider('tenure')">
+                            </div>
+                        </div>
+                        <input type="range" id="tenureSlider" min="15" max="50" step="5" value="15"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                            oninput="syncInput('tenure')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>15 Yrs (Lock-in)</span>
+                            <span>50 Yrs</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1">Can be extended in blocks of 5 years after the
+                            initial 15-year maturity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content SEO text -->
+            <div
+                class="bg-teal-50 p-6 rounded-xl border border-teal-100 shadow-sm text-sm text-teal-900 leading-relaxed">
+                <p>Public Provident Fund (PPF) is a popular long term investment option backed by Government of India
+                    which offers safety with attractive interest rate and returns that are fully exempted from Tax.</p>
+                <p class="mt-2 text-teal-800 font-medium">PPF falls under the EEE (Exempt-Exempt-Exempt) category. This
+                    means your principal, interest, and maturity amount are entirely tax-free!</p>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <div class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center">
+                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Maturity Amount</p>
+                <p class="text-4xl lg:text-5xl font-extrabold text-teal-400" id="maturityDisplay">₹0</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded flex flex-col">
+                        <p class="text-xs text-slate-500 mb-1 leading-tight">Total Invested</p>
+                        <p class="text-lg font-bold text-slate-700 mt-auto" id="investedDisplay">₹0</p>
+                    </div>
+                    <div class="p-3 bg-teal-50 border border-teal-200 rounded flex flex-col">
+                        <p class="text-xs text-teal-700 mb-1 leading-tight">Total Interest Gained</p>
+                        <p class="text-lg font-bold text-teal-600 mt-auto" id="interestDisplay">₹0</p>
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="relative h-64 w-full flex justify-center items-center">
+                    <canvas id="ppfChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
