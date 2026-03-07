@@ -4,6 +4,77 @@ function formatRupee(amount) {
     return '₹' + Math.round(amount).toLocaleString('en-IN');
 }
 
+let goldChartInstance = null;
+
+function initChart() {
+    if (typeof document !== 'undefined' && document.getElementById('goldChart')) {
+        const ctx = document.getElementById('goldChart').getContext('2d');
+        const data = {
+            labels: ['Principal', 'Total Interest'],
+            datasets: [{
+                data: [50, 50],
+                backgroundColor: ['#94a3b8', '#f59e0b'], // slate-400 and amber-500
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: { family: 'Inter, system-ui, sans-serif', size: 13 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) label += ': ';
+                                label += formatRupee(context.raw);
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        goldChartInstance = new Chart(ctx, config);
+    }
+}
+
+function updateChart(principalAmount, interestAmount) {
+    if (goldChartInstance) {
+        goldChartInstance.data.datasets[0].data = [principalAmount, interestAmount];
+        goldChartInstance.update();
+    }
+}
+
+function syncInput(id) {
+    let val = document.getElementById(id + 'Slider').value;
+    document.getElementById(id).value = val;
+    calculate();
+}
+
+function syncSlider(id) {
+    let val = document.getElementById(id).value;
+    if (document.getElementById(id + 'Slider')) {
+        document.getElementById(id + 'Slider').value = val;
+    }
+    calculate();
+}
+
+
 function toggleMonthlyInput() {
     const isChecked = document.getElementById('enableMonthly').checked;
     document.getElementById('monthlyPaymentContainer').style.display = isChecked ? 'block' : 'none';
@@ -168,6 +239,8 @@ function calculate() {
     document.getElementById('sumInterest').textContent = formatRupee(scenario.totalInt);
     document.getElementById('sumPayable').textContent = formatRupee(scenario.totalPaid);
 
+    updateChart(principal, scenario.totalInt);
+
     // Savings calculation 
     let savedInt = baseline.totalInt - scenario.totalInt;
     let savingsBox = document.getElementById('savingsBox');
@@ -218,6 +291,7 @@ function calculate() {
 
 // Initialize on first load
 document.addEventListener('DOMContentLoaded', () => {
+    initChart();
     // wait a tick if date input needs setting
     setTimeout(calculate, 100);
 });

@@ -4,100 +4,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinCalcPro - Financial Calculators</title>
+    <title>FinCalcPro - Your Comprehensive Financial Hub</title>
+    <meta name="description"
+        content="Advanced financial calculators for loans, investments, retirement, and tax planning. Master your finances today.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
         crossorigin="anonymous"></script>
+    <!-- Tooltip logic via simple CSS and Tailwind -->
+    <style>
+        .group:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
 
     <!-- Navbar -->
-    <nav class="bg-indigo-600 text-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <nav class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
             <a href="index.html"
-                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors">FinCalc<span
-                    class="text-indigo-200">Pro</span></a>
+                class="text-2xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                FinCalc<span class="text-indigo-200">Pro</span>
+            </a>
+            <div class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="#borrowing" class="hover:text-indigo-200 transition">Borrowing</a>
+                <a href="#growing" class="hover:text-indigo-200 transition">Wealth</a>
+                <a href="#future" class="hover:text-indigo-200 transition">Retirement</a>
+                <a href="#efficiency" class="hover:text-indigo-200 transition">Tax & Savings</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Top Ad -->
+    <div class="max-w-7xl mx-auto w-full px-4 mt-6">
+        <div
+            class="h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm overflow-hidden">
+            <span>[ AdSense Top Banner ]</span>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-12 flex-grow w-full">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-slate-900 mb-4">Master Your Finances</h1>
-            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Welcome to FinCalcPro. We provide lightning-fast,
-                privacy-first tools to help you take control of your loans and investments.</p>
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Your Financial <span
+                    class="text-indigo-600">Command Center</span></h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Make smarter money decisions with our suite
+                of powerful, precision-engineered calculators.</p>
         </div>
 
-        <!-- Calculators Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="space-y-16">
+            <!-- 1. Loan Tools (Borrowing) -->
+            <section id="borrowing" class="scroll-mt-24">
+                <h2
+                    class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </span>
+                    Loan Tools (Borrowing)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- EMI Calculator -->
+                    <a href="calculators/emi/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-blue-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" class="w-6 h-6" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Advanced EMI Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Calculate home, car, or personal loan EMIs with
+                            amortization schedules.</p>
+                        <!-- Tooltip Info-Bubble -->
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-blue-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Breaks down interest/principal with visual charts and
+                                supports Indian FY calendar.
+                            </div>
+                        </div>
+                    </a>
 
-            <!-- EMI Calculator Card -->
-            <a href="calculators/emi/index.html"
-                class="block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
-                <div
-                    class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                        </path>
-                    </svg>
+                    <!-- Gold Loan Calculator -->
+                    <a href="calculators/gold-loan/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-amber-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Agri Gold Loan Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Supporting 6-month compounding and part-payment interest
+                            saving logic.</p>
+                        <!-- Tooltip Info-Bubble -->
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-amber-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Models bullet repayments where interest is compounded
+                                half-yearly.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Balance Transfer -->
+                    <a href="calculators/balance-transfer/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-indigo-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Balance Transfer Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Calculate potential savings when switching lenders for a
+                            lower rate.</p>
+                        <!-- Tooltip Info-Bubble -->
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-indigo-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Evaluates processing fees vs interest difference to
+                                recommend switching.
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Advanced EMI Calculator</h3>
-                <p class="text-sm text-slate-500">Calculate home, car, or personal loan EMIs. Features support for extra
-                    monthly payments and standard/financial calendar years.</p>
-            </a>
+            </section>
 
-            <!-- Gold Loan Calculator Card -->
-            <a href="calculators/gold-loan/index.html"
-                class="block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md hover:border-amber-300 transition-all group">
-                <div
-                    class="w-12 h-12 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <!-- 2. Investment & Wealth (Growing) -->
+            <section id="growing" class="scroll-mt-24">
+                <h2
+                    class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <span class="bg-emerald-100 text-emerald-600 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </span>
+                    Investment & Wealth (Growing)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- SIP Calculator -->
+                    <a href="calculators/sip/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">SIP Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Estimate future returns on systematic monthly mutual fund
+                            contributions.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-emerald-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Calculates compounding returns from recurring monthly
+                                investments over years.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Compound Interest -->
+                    <a href="calculators/compound-interest/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Compound Interest</h3>
+                        <p class="text-sm text-slate-500 mb-4">Visualize long-term growth with highly adjustable
+                            compounding frequencies.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-emerald-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Uses the A = P(1+r/n)^(nt) formula with interactive
+                                charts.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Lumpsum Investment -->
+                    <a href="calculators/lumpsum/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Lumpsum Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Predicts future maturity value for one-time bulk
+                            investments.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-emerald-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Evaluates single-payment maturity using expected annual
+                                growth rate.
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- 3. Retirement & Planning (Future) -->
+            <section id="future" class="scroll-mt-24">
+                <h2
+                    class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <span class="bg-purple-100 text-purple-600 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </span>
+                    Retirement & Planning (Future)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Retirement Corpus -->
+                    <a href="calculators/retirement/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-purple-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Retirement Corpus</h3>
+                        <p class="text-sm text-slate-500 mb-4">Estimates the total fund needed based on current expenses
+                            and projected inflation.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-purple-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Uses inflation indexing to forecast required monthly
+                                living expenses post-retirement.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- FIRE Calculator -->
+                    <a href="calculators/fire/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-purple-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">FIRE Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Determine exactly when you can achieve Financial
+                            Independence and Retire Early.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-purple-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Applies the 4% Safe Withdrawal Rate rule against
+                                aggressive savings ratios.
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- 4. Tax & Savings (Efficiency) -->
+            <section id="efficiency" class="scroll-mt-24">
+                <h2
+                    class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <span class="bg-teal-100 text-teal-600 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                            </path>
+                        </svg>
+                    </span>
+                    Tax & Savings (Efficiency)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Income Tax Calculator -->
+                    <a href="calculators/tax/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-teal-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Income Tax Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Compares liability exactly between Old Tax Regime and New
+                            Tax Regime.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-teal-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Incorporates Section 80C, standard deductions, and tax
+                                slabs.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- PPF / NPS -->
+                    <a href="calculators/ppf-nps/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-teal-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">PPF/NPS Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Projects secure returns for long-term government savings
+                            schemes.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-teal-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Models structured EEE tax-free status and 15+ year
+                                lock-in bounds.
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Ad Slot 3 (Bottom) -->
+    <div class="max-w-7xl mx-auto w-full px-4 mb-12">
+        <div class="h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm overflow-hidden"
+            id="AD_SLOT_3">
+            <span>[ AdSense Bottom Banner ]</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 text-sm mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="flex items-center gap-2 text-xl font-bold text-white mb-4">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                     </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-slate-800 mb-2">Gold Loan Bullet Repayment</h3>
-                <p class="text-sm text-slate-500">Calculate Gold Loan Bullet Repayments. Track your compounding interest
-                    every 6 months and test part-payments.</p>
-            </a>
-
-            <!-- Placeholder Card -->
-            <div
-                class="bg-slate-50 rounded-xl border border-dashed border-slate-300 p-6 flex flex-col items-center justify-center text-center text-slate-400">
-                <svg class="w-8 h-8 mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                <h3 class="font-medium">More Calculators</h3>
-                <p class="text-xs mt-1">Coming Soon...</p>
+                    FinCalcPro
+                </a>
+                <p class="text-slate-500 max-w-sm">Disclaimer: Calculations are for informational purposes strictly.
+                    Consult a licensed financial professional before making critical financial decisions.</p>
+                <p class="mt-4">&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
             </div>
 
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-8 text-sm mt-auto">
-        <div
-            class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div>
-                <p class="mb-2">&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
-                <p class="text-xs text-slate-500 max-w-xl">Disclaimer: Calculations are for informational purposes only.
-                    Consult a financial professional before making financial decisions.</p>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Categories</h4>
+                <ul class="space-y-2">
+                    <li><a href="#borrowing" class="hover:text-white transition-colors">Loan Tools</a></li>
+                    <li><a href="#growing" class="hover:text-white transition-colors">Wealth & Investment</a></li>
+                    <li><a href="#future" class="hover:text-white transition-colors">Retirement</a></li>
+                    <li><a href="#efficiency" class="hover:text-white transition-colors">Tax & Savings</a></li>
+                </ul>
             </div>
-            <div class="flex flex-wrap justify-center md:justify-end gap-x-4 gap-y-2 mt-4 md:mt-0">
-                <a href="about.html" class="hover:text-white transition-colors">About</a>
-                <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
-                <a href="privacy.html" class="hover:text-white transition-colors">Privacy</a>
-                <a href="terms.html" class="hover:text-white transition-colors">Terms</a>
-                <a href="faq.html" class="hover:text-white transition-colors">FAQ</a>
-                <a href="disclaimer.html" class="hover:text-white transition-colors">Disclaimer</a>
+
+            <div>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="faq.html" class="hover:text-white transition-colors">FAQ</a></li>
+                    <li><a href="disclaimer.html" class="hover:text-white transition-colors">Legal Disclaimer</a></li>
+                </ul>
             </div>
         </div>
     </footer>
-    <script>if (document.getElementById('currentYear')) document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>

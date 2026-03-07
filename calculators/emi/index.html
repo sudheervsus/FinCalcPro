@@ -61,6 +61,7 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
         crossorigin="anonymous"></script>
 </head>
@@ -99,39 +100,60 @@
                     </svg>
                     Loan Details
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">Principal Amount (₹)</label>
-                        <input type="number" id="principal" aria-label="Principal Amount" value="1000000"
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                            oninput="calculate()">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">Annual Interest Rate (%)</label>
-                        <input type="number" id="rate" aria-label="Annual Interest Rate" value="8.5" step="0.1"
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                            oninput="calculate()">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">Tenure</label>
-                        <div class="flex">
-                            <input type="number" id="tenure" aria-label="Tenure" value="10"
-                                class="w-full px-4 py-2 border border-r-0 border-slate-300 rounded-l-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                                oninput="calculate()">
-                            <select id="tenureType" aria-label="Tenure Type"
-                                class="bg-slate-50 border border-slate-300 rounded-r-lg px-3 py-2 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                                onchange="calculate()">
-                                <option value="years">Years</option>
-                                <option value="months">Months</option>
-                            </select>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-medium text-slate-600">Principal Amount (₹)</label>
+                            <input type="number" id="principal" aria-label="Principal Amount" value="1000000"
+                                class="w-32 px-2 py-1 border border-slate-300 rounded text-right focus:ring-2 focus:ring-indigo-500 outline-none"
+                                oninput="syncSlider('principal', this.value)">
                         </div>
+                        <input type="range" id="principalSlider" min="100000" max="50000000" step="100000"
+                            value="1000000"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                            oninput="syncInput('principal', this.value)">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">Monthly Extra Payment (₹) <span
-                                class="text-xs text-indigo-500 font-normal">(Optional)</span></label>
-                        <input type="number" id="monthlyExtra" aria-label="Monthly Extra Payment" value="0"
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                            oninput="calculate()">
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-medium text-slate-600">Annual Interest Rate (%)</label>
+                            <input type="number" id="rate" aria-label="Annual Interest Rate" value="8.5" step="0.1"
+                                class="w-24 px-2 py-1 border border-slate-300 rounded text-right focus:ring-2 focus:ring-indigo-500 outline-none"
+                                oninput="syncSlider('rate', this.value)">
+                        </div>
+                        <input type="range" id="rateSlider" min="1" max="25" step="0.1" value="8.5"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                            oninput="syncInput('rate', this.value)">
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-medium text-slate-600">Tenure</label>
+                            <div class="flex">
+                                <input type="number" id="tenure" aria-label="Tenure" value="10"
+                                    class="w-20 px-2 py-1 border border-r-0 border-slate-300 rounded-l text-right focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    oninput="syncSlider('tenure', this.value)">
+                                <select id="tenureType" aria-label="Tenure Type"
+                                    class="bg-slate-50 border border-slate-300 rounded-r px-2 py-1 text-sm text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    onchange="calculate()">
+                                    <option value="years">Years</option>
+                                    <option value="months">Months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="range" id="tenureSlider" min="1" max="30" step="1" value="10"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                            oninput="syncInput('tenure', this.value)">
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-medium text-slate-600">Monthly Extra (₹) <span
+                                    class="text-xs text-indigo-500 font-normal">(Optional)</span></label>
+                            <input type="number" id="monthlyExtra" aria-label="Monthly Extra Payment" value="0"
+                                class="w-24 px-2 py-1 border border-slate-300 rounded text-right focus:ring-2 focus:ring-indigo-500 outline-none"
+                                oninput="syncSlider('monthlyExtra', this.value)">
+                        </div>
+                        <input type="range" id="monthlyExtraSlider" min="0" max="50000" step="500" value="0"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                            oninput="syncInput('monthlyExtra', this.value)">
                     </div>
                 </div>
 
@@ -172,6 +194,13 @@
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-l-4 border-l-emerald-400">
                     <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Payable</p>
                     <p class="text-2xl font-bold text-slate-800 mt-1" id="sumPayable">₹0</p>
+                </div>
+            </div>
+
+            <!-- Visual Chart Box -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <div class="relative h-64 w-full flex justify-center items-center">
+                    <canvas id="emiChart"></canvas>
                 </div>
             </div>
 

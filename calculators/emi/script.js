@@ -4,10 +4,85 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 let scheduleData = [];
 let oneTimePayments = {};
 
+let emiChartInstance = null;
+
+function initChart() {
+    // Only init if canvas exists (avoids Jest error)
+    if (typeof document !== 'undefined' && document.getElementById('emiChart')) {
+        const ctx = document.getElementById('emiChart').getContext('2d');
+        const data = {
+            labels: ['Principal', 'Total Interest'],
+            datasets: [{
+                data: [50, 50],
+                backgroundColor: ['#94a3b8', '#6366f1'], // slate-400 and indigo-500
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: { family: 'Inter, system-ui, sans-serif', size: 13 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) label += ': ';
+                                label += formatCurrency(context.raw);
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        emiChartInstance = new Chart(ctx, config);
+    }
+}
+
+function updateChart(principalAmount, interestAmount) {
+    if (emiChartInstance) {
+        emiChartInstance.data.datasets[0].data = [principalAmount, interestAmount];
+        emiChartInstance.update();
+    }
+}
+
+// Sync UI inputs with sliders
+function syncInput(id) {
+    let val = document.getElementById(id + 'Slider').value;
+    document.getElementById(id).value = val;
+    calculate();
+}
+
+function syncSlider(id) {
+    let val = document.getElementById(id).value;
+    if (document.getElementById(id + 'Slider')) {
+        document.getElementById(id + 'Slider').value = val;
+    }
+    calculate();
+}
+
+
 // Initiate DOM
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-    
+    initChart();
+
+    if (document.getElementById('currentYear')) document.getElementById('currentYear').textContent = new Date().getFullYear();
+
     const monthSelect = document.getElementById('startMonth');
     months.forEach((m, i) => {
         const opt = document.createElement('option');
@@ -15,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         opt.textContent = m;
         monthSelect.appendChild(opt);
     });
-    
+
     const now = new Date();
     monthSelect.value = now.getMonth();
     document.getElementById('startYear').value = now.getFullYear();
@@ -69,7 +144,7 @@ function calculate() {
             interestForMonth = interestForMonth;
             principalForMonth = balance;
             currentMonthExtra = actualPayment - interestForMonth - (emi - interestForMonth);
-            if(currentMonthExtra < 0) currentMonthExtra = 0;
+            if (currentMonthExtra < 0) currentMonthExtra = 0;
             balance = 0;
         } else {
             actualPayment = expectedTotalPayment;
@@ -104,14 +179,16 @@ function calculate() {
     document.getElementById('sumInterest').textContent = formatCurrency(totalInterest);
     document.getElementById('sumPayable').textContent = formatCurrency(p + totalInterest);
 
+    updateChart(p, totalInterest);
+
     // Update Savings
     const savingsBox = document.getElementById('savingsBox');
     if (monthlyExtra > 0 || Object.keys(oneTimePayments).length > 0) {
         let savedInt = baselineInterest - totalInterest;
         let savedMon = n - monthCount;
-        if(savedInt < 0) savedInt = 0;
-        if(savedMon < 0) savedMon = 0;
-        
+        if (savedInt < 0) savedInt = 0;
+        if (savedMon < 0) savedMon = 0;
+
         document.getElementById('savedInterest').textContent = formatCurrency(savedInt);
         document.getElementById('savedMonths').textContent = savedMon + (savedMon === 1 ? ' Month' : ' Months');
         savingsBox.classList.remove('hidden');
@@ -135,14 +212,14 @@ function renderSchedule() {
     if (scheduleData.length === 0) return;
     const tbody = document.getElementById('scheduleBody');
     tbody.innerHTML = '';
-    
+
     const calType = document.getElementById('calendarType').value;
     let currentGroup = '';
-    
+
     let groupTotPrinc = 0;
     let groupTotInt = 0;
     let groupTotExt = 0;
-    
+
     scheduleData.forEach((row, index) => {
         // Determine group based on calendar selection
         let rowGroup = '';
@@ -151,7 +228,7 @@ function renderSchedule() {
         } else {
             // Indian FY: Apr (3) to Mar (2)
             let fyYear = row.monthVal >= 3 ? row.year : row.year - 1;
-            rowGroup = `FY ${fyYear}-${(fyYear+1).toString().slice(-2)}`;
+            rowGroup = `FY ${fyYear}-${(fyYear + 1).toString().slice(-2)}`;
         }
 
         // If new group, and not first row, append subtotal row
@@ -167,7 +244,7 @@ function renderSchedule() {
 
         const tr = document.createElement('tr');
         tr.className = 'schedule-row transition-colors';
-        
+
         // One time extra input specific to this row (minus global monthly extra if any)
         // Use the onblur event to retain focus properly
         let specificExtra = (oneTimePayments[row.id] || 0);
