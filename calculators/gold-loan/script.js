@@ -164,9 +164,9 @@ function calculate() {
     let scenario = simulateLoan(principal, rate, tenure, enableMonthly, monthlyAmount, partPayments, startDateStr);
 
     // Update Dashboard Cards
-    document.getElementById('sumPrincipal').innerText = formatRupee(principal);
-    document.getElementById('sumInterest').innerText = formatRupee(scenario.totalInt);
-    document.getElementById('sumPayable').innerText = formatRupee(scenario.totalPaid);
+    document.getElementById('sumPrincipal').textContent = formatRupee(principal);
+    document.getElementById('sumInterest').textContent = formatRupee(scenario.totalInt);
+    document.getElementById('sumPayable').textContent = formatRupee(scenario.totalPaid);
 
     // Savings calculation 
     let savedInt = baseline.totalInt - scenario.totalInt;
@@ -174,7 +174,7 @@ function calculate() {
 
     if (savedInt > 1) { // 1 rupee threshold due to floating rounding
         savingsBox.style.display = 'flex';
-        document.getElementById('savedInterest').innerText = formatRupee(savedInt);
+        document.getElementById('savedInterest').textContent = formatRupee(savedInt);
     } else {
         savingsBox.style.display = 'none';
     }
