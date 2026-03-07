@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Visualize long-term growth and evaluate compounded returns on bulk investments with highly adjustable compounding frequencies.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                FinCalcPro <span class="text-emerald-300">Wealth</span>
+            </a>
+            <div class="text-sm font-medium">Compound Interest</div>
+        </div>
+    </nav>
+
+    <!-- Ad Slot 1 (Top) -->
+    <div class="max-w-7xl mx-auto w-full px-4 mt-6">
+        <div class="ad-slot h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm"
+            id="AD_SLOT_1">
+            <span>[ AdSense Top Banner ]</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs & Sliders -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-4 mb-6">
+                    <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                        </span>
+                        Investment Visualizer
+                    </h1>
+                </div>
+
+                <!-- Sliders -->
+                <div class="space-y-8">
+                    <!-- Principal Amount -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Initial Investment (₹)</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-400">₹</span>
+                                <input type="number" id="principalInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="100000" oninput="syncSlider('principal')">
+                            </div>
+                        </div>
+                        <input type="range" id="principalSlider" min="5000" max="10000000" step="5000" value="100000"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('principal')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹5K</span>
+                            <span>₹1 Cr</span>
+                        </div>
+                    </div>
+
+                    <!-- Expected Return Rate -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Annual Return / Interest
+                                Rate</label>
+                            <div class="relative">
+                                <input type="number" id="rateInput"
+                                    class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="10" step="0.1" oninput="syncSlider('rate')">
+                                <span class="absolute right-3 top-1 text-slate-400">%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rateSlider" min="1" max="50" step="0.1" value="10"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('rate')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>1%</span>
+                            <span>50%</span>
+                        </div>
+                    </div>
+
+                    <!-- Time Period -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Time Period (Years)</label>
+                            <div class="relative">
+                                <input type="number" id="timeInput"
+                                    class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="5" oninput="syncSlider('time')">
+                                <span class="absolute right-3 top-1 text-slate-400">Yr</span>
+                            </div>
+                        </div>
+                        <input type="range" id="timeSlider" min="1" max="50" step="1" value="5"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('time')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>1 Yr</span>
+                            <span>50 Yrs</span>
+                        </div>
+                    </div>
+
+                    <!-- Compounding Frequency -->
+                    <div class="pt-4 border-t border-slate-100">
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Compounding Frequency</label>
+                        <select id="frequencySelect"
+                            class="w-full md:w-1/2 px-4 py-2 border border-slate-300 rounded-lg bg-slate-50 text-slate-700 font-medium focus:ring-2 focus:ring-emerald-500 outline-none"
+                            onchange="calculate()">
+                            <option value="1">Annually</option>
+                            <option value="2">Semi-Annually</option>
+                            <option value="4">Quarterly</option>
+                            <option value="12">Monthly</option>
+                            <option value="365">Daily</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Content SEO text -->
+            <div
+                class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 shadow-sm text-sm text-emerald-900 leading-relaxed">
+                <h3 class="font-bold mb-2 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Understanding Compound Interest
+                </h3>
+                <p>Compound interest is the interest on your savings calculated on both the initial principal and the
+                    accumulated interest from previous periods.</p>
+                <p class="mt-2"><strong>Frequency Matters:</strong> The more often interest compounds (e.g. daily vs
+                    annually), the faster your wealth multiplies because you earn interest on your interest sooner.</p>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <div class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center">
+                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Total Maturity Value</p>
+                <p class="text-4xl lg:text-5xl font-extrabold text-emerald-400" id="totalValueDisplay">₹0</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <!-- Data breakdown Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center">
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Principal Invested</p>
+                        <p class="text-xl font-bold text-slate-800 mt-1" id="investedAmountDisplay">₹0</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-lg border border-emerald-100 flex flex-col items-center">
+                        <p class="text-xs font-semibold text-emerald-600 uppercase">Interest Gained</p>
+                        <p class="text-xl font-bold text-emerald-700 mt-1" id="estReturnsDisplay">₹0</p>
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="relative h-64 w-full flex justify-center items-center">
+                    <canvas id="compChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Ad Slot (Sidebar) -->
+            <div class="ad-slot h-64 rounded-xl w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm overflow-hidden"
+                id="AD_SLOT_SIDE">
+                <span>[ Sidebar Ad Unit ]</span>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
