@@ -6,22 +6,53 @@ function initChart() {
     if (typeof document !== 'undefined' && document.getElementById('compChart')) {
         const ctx = document.getElementById('compChart').getContext('2d');
         const data = {
-            labels: ['Principal Invested', 'Est. Returns'],
-            datasets: [{
-                data: [50, 50],
-                backgroundColor: ['#94a3b8', '#10b981'], // slate-400, emerald-500
-                borderWidth: 0,
-                hoverOffset: 4
-            }]
+            labels: [],
+            datasets: [
+                {
+                    label: 'Invested Amount',
+                    data: [],
+                    backgroundColor: '#94a3b8', // slate-400
+                    borderWidth: 0,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Est. Returns',
+                    data: [],
+                    backgroundColor: '#10b981', // emerald-500
+                    borderWidth: 0,
+                    borderRadius: 4
+                }
+            ]
         };
 
         const config = {
-            type: 'doughnut',
+            type: 'bar',
             data: data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: '75%',
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false }
+                    },
+                    y: {
+                        stacked: true,
+                        border: { display: false },
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
+                        }
+                    }
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -34,7 +65,7 @@ function initChart() {
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                let label = context.label || '';
+                                let label = context.dataset.label || '';
                                 if (label) label += ': ';
                                 label += formatRupee(context.raw);
                                 return label;
@@ -49,9 +80,11 @@ function initChart() {
     }
 }
 
-function updateChart(principalAmount, returnsAmount) {
+function updateChart(labels, principalData, returnsData) {
     if (compChartInstance) {
-        compChartInstance.data.datasets[0].data = [principalAmount, returnsAmount];
+        compChartInstance.data.labels = labels;
+        compChartInstance.data.datasets[0].data = principalData;
+        compChartInstance.data.datasets[1].data = returnsData;
         compChartInstance.update();
     }
 }
@@ -91,13 +124,27 @@ function calculate() {
 
     // Compound Interest Formula: A = P(1 + r/n)^(nt)
     const r = rateAnnual / 100;
-    const exponent = n * tYears;
+
+    let chartLabels = [];
+    let principalData = [];
+    let returnsData = [];
+
+    // Map year by year
+    for (let year = 1; year <= tYears; year++) {
+        chartLabels.push('Year ' + year);
+        let amountAtYear = p;
+        if (n > 0) {
+            amountAtYear = p * Math.pow(1 + (r / n), n * year);
+        }
+        principalData.push(p);
+        returnsData.push(amountAtYear - p);
+    }
 
     let maturityAmount = 0;
-    if (n > 0 && tYears > 0) {
-        maturityAmount = p * Math.pow(1 + (r / n), exponent);
+    if (tYears > 0) {
+        maturityAmount = p * Math.pow(1 + (r / n), n * tYears);
     } else {
-        maturityAmount = p; // fallback
+        maturityAmount = p;
     }
 
     const estReturns = maturityAmount - p;
@@ -107,7 +154,7 @@ function calculate() {
     document.getElementById('estReturnsDisplay').textContent = formatRupee(estReturns);
     document.getElementById('totalValueDisplay').textContent = formatRupee(maturityAmount);
 
-    updateChart(p, estReturns);
+    updateChart(chartLabels, principalData, returnsData);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -11,22 +11,76 @@ function initChart() {
     if (typeof document !== 'undefined' && document.getElementById('emiChart')) {
         const ctx = document.getElementById('emiChart').getContext('2d');
         const data = {
-            labels: ['Principal', 'Total Interest'],
-            datasets: [{
-                data: [50, 50],
-                backgroundColor: ['#94a3b8', '#6366f1'], // slate-400 and indigo-500
-                borderWidth: 0,
-                hoverOffset: 4
-            }]
+            labels: [],
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Remaining Balance',
+                    data: [],
+                    borderColor: '#f43f5e',
+                    backgroundColor: '#f43f5e',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    yAxisID: 'y1'
+                },
+                {
+                    type: 'bar',
+                    label: 'Principal Paid',
+                    data: [],
+                    backgroundColor: '#94a3b8',
+                    stack: 'Stack 0',
+                    yAxisID: 'y'
+                },
+                {
+                    type: 'bar',
+                    label: 'Interest Paid',
+                    data: [],
+                    backgroundColor: '#6366f1',
+                    stack: 'Stack 0',
+                    yAxisID: 'y'
+                }
+            ]
         };
 
         const config = {
-            type: 'doughnut',
+            type: 'bar',
             data: data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: '70%',
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        stacked: true,
+                        position: 'left',
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
+                        }
+                    },
+                    y1: {
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
+                        }
+                    }
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -39,7 +93,7 @@ function initChart() {
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                let label = context.label || '';
+                                let label = context.dataset.label || '';
                                 if (label) label += ': ';
                                 label += formatCurrency(context.raw);
                                 return label;
@@ -54,9 +108,12 @@ function initChart() {
     }
 }
 
-function updateChart(principalAmount, interestAmount) {
+function updateChart(labels, balanceArray, principalArray, interestArray) {
     if (emiChartInstance) {
-        emiChartInstance.data.datasets[0].data = [principalAmount, interestAmount];
+        emiChartInstance.data.labels = labels;
+        emiChartInstance.data.datasets[0].data = balanceArray;
+        emiChartInstance.data.datasets[1].data = principalArray;
+        emiChartInstance.data.datasets[2].data = interestArray;
         emiChartInstance.update();
     }
 }
@@ -179,7 +236,22 @@ function calculate() {
     document.getElementById('sumInterest').textContent = formatCurrency(totalInterest);
     document.getElementById('sumPayable').textContent = formatCurrency(p + totalInterest);
 
-    updateChart(p, totalInterest);
+    // Group scheduleData by year for charting
+    let yearlyData = {};
+    scheduleData.forEach(row => {
+        let y = row.year;
+        if (!yearlyData[y]) yearlyData[y] = { principal: 0, interest: 0, balance: 0 };
+        yearlyData[y].principal += row.principal + row.extra;
+        yearlyData[y].interest += row.interest;
+        yearlyData[y].balance = row.balance; // Overwrites so we get the end-of-year balance
+    });
+
+    let chartLabels = Object.keys(yearlyData);
+    let chartPrincipal = chartLabels.map(y => yearlyData[y].principal);
+    let chartInterest = chartLabels.map(y => yearlyData[y].interest);
+    let chartBalance = chartLabels.map(y => yearlyData[y].balance);
+
+    updateChart(chartLabels, chartBalance, chartPrincipal, chartInterest);
 
     // Update Savings
     const savingsBox = document.getElementById('savingsBox');
