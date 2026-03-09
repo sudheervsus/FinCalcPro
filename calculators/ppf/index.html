@@ -3,7 +3,8 @@
 
 <head>
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'/%3E%3C/svg%3E">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PPF Calculator | FinCalcPro</title>
@@ -25,7 +26,10 @@
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="../../index.html"
                 class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
                 FinCalcPro <span class="text-teal-300">Savings</span>
             </a>
             <div class="text-sm font-medium">PPF Calculator</div>
@@ -57,24 +61,73 @@
                 </div>
 
                 <div class="space-y-8 flex flex-col gap-2">
-                    <!-- Yearly Investment -->
+                    <!-- Current Balance -->
                     <div>
                         <div class="flex justify-between mb-2">
-                            <label class="block text-sm font-semibold text-teal-800">Yearly Investment</label>
+                            <label class="block text-sm font-semibold text-teal-800">Current PPF Balance</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1 text-slate-500">₹</span>
-                                <input type="number" id="yearlyInput"
+                                <input type="number" id="balanceInput"
                                     class="w-32 pl-7 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-teal-800 outline-none focus:ring-1 focus:ring-teal-500"
-                                    value="150000" step="500" oninput="syncSlider('yearly')">
+                                    value="0" step="5000" oninput="syncSlider('balance')">
                             </div>
                         </div>
-                        <input type="range" id="yearlySlider" min="500" max="150000" step="500" value="150000"
+                        <input type="range" id="balanceSlider" min="0" max="5000000" step="5000" value="0"
                             class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
-                            oninput="syncInput('yearly')">
+                            oninput="syncInput('balance')">
                         <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
-                            <span>₹500 (Min)</span>
-                            <span>₹1.5L (Max)</span>
+                            <span>₹0</span>
+                            <span>₹50L</span>
                         </div>
+                        <p id="balanceError" class="text-xs text-red-500 font-medium mt-1 hidden"></p>
+                    </div>
+
+                    <!-- Years Completed -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Years Completed</label>
+                            <div class="relative">
+                                <input type="number" id="yearsCompletedInput"
+                                    class="w-20 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-slate-700 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="0" min="0" max="15" step="1" oninput="syncSlider('yearsCompleted')">
+                            </div>
+                        </div>
+                        <input type="range" id="yearsCompletedSlider" min="0" max="15" step="1" value="0"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                            oninput="syncInput('yearsCompleted')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>0 Yrs</span>
+                            <span>15 Yrs</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Investment Amount</label>
+                            <select id="frequencySelect"
+                                class="bg-white border text-xs border-teal-300 rounded text-teal-800 font-medium outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer px-2 py-1"
+                                onchange="changeFrequency()">
+                                <option value="yearly">Yearly Lumpsum</option>
+                                <option value="monthly">Monthly SIP</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs text-transparent select-none">Spacer</span>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="investmentInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-teal-800 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="150000" step="500" oninput="syncSlider('investment')">
+                            </div>
+                        </div>
+                        <input type="range" id="investmentSlider" min="500" max="150000" step="500" value="150000"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                            oninput="syncInput('investment')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span id="investmentMinLabel">₹500 (Min)</span>
+                            <span id="investmentMaxLabel">₹1.5L (Max)</span>
+                        </div>
+                        <p id="investmentError" class="text-xs text-red-500 font-medium mt-1 hidden">Maximum PPF
+                            investment allowed is ₹1,50,000 per year.</p>
                     </div>
 
                     <!-- Interest Rate -->
@@ -92,25 +145,21 @@
                             ~7.1% p.a.</p>
                     </div>
 
-                    <!-- Tenure -->
+                    <!-- Extension Option -->
                     <div>
                         <div class="flex justify-between mb-2">
-                            <label class="block text-sm font-semibold text-teal-800">Total Tenure (Years)</label>
-                            <div class="relative">
-                                <input type="number" id="tenureInput"
-                                    class="w-20 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-slate-700 outline-none focus:ring-1 focus:ring-teal-500"
-                                    value="15" step="5" oninput="syncSlider('tenure')">
-                            </div>
+                            <label class="block text-sm font-semibold text-teal-800">Maturity / Extension
+                                Strategy</label>
                         </div>
-                        <input type="range" id="tenureSlider" min="15" max="50" step="5" value="15"
-                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
-                            oninput="syncInput('tenure')">
-                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
-                            <span>15 Yrs (Lock-in)</span>
-                            <span>50 Yrs</span>
-                        </div>
-                        <p class="text-[10px] text-slate-400 mt-1">Can be extended in blocks of 5 years after the
-                            initial 15-year maturity.</p>
+                        <select id="extensionSelect"
+                            class="w-full px-3 py-2 bg-white border border-teal-300 rounded text-slate-700 font-medium outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer"
+                            onchange="calculate()">
+                            <option value="none">Close at 15 Years</option>
+                            <option value="invest">Extend to 20 Years (With Investment)</option>
+                            <option value="no_invest">Extend to 20 Years (Without Investment)</option>
+                        </select>
+                        <p class="text-[10px] text-slate-400 mt-1">Select your plan after the standard 15-year maturity
+                            period.</p>
                     </div>
                 </div>
             </div>
@@ -135,14 +184,18 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded flex flex-col">
+                        <p class="text-[11px] text-blue-600 mb-1 leading-tight font-semibold">Current Balance</p>
+                        <p class="text-base font-bold text-blue-800 mt-auto truncate" id="currentBalanceDisplay">₹0</p>
+                    </div>
                     <div class="p-3 bg-slate-50 border border-slate-200 rounded flex flex-col">
-                        <p class="text-xs text-slate-500 mb-1 leading-tight">Total Invested</p>
-                        <p class="text-lg font-bold text-slate-700 mt-auto" id="investedDisplay">₹0</p>
+                        <p class="text-[11px] text-slate-500 mb-1 leading-tight font-semibold">Future Inv.</p>
+                        <p class="text-base font-bold text-slate-700 mt-auto truncate" id="investedDisplay">₹0</p>
                     </div>
                     <div class="p-3 bg-teal-50 border border-teal-200 rounded flex flex-col">
-                        <p class="text-xs text-teal-700 mb-1 leading-tight">Total Interest Gained</p>
-                        <p class="text-lg font-bold text-teal-600 mt-auto" id="interestDisplay">₹0</p>
+                        <p class="text-[11px] text-teal-700 mb-1 leading-tight font-semibold">Future Interest</p>
+                        <p class="text-base font-bold text-teal-600 mt-auto truncate" id="interestDisplay">₹0</p>
                     </div>
                 </div>
 
@@ -153,28 +206,97 @@
             </div>
 
         </div>
-    
+
         <!-- Article & FAQ Section -->
         <article class="col-span-1 lg:col-span-12 mt-8 mb-4">
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                 <h2 class="text-2xl font-bold text-slate-800 mb-4">Understanding the Public Provident Fund (PPF)</h2>
-                <div class="prose prose-slate max-w-none text-slate-600 mb-8">
-                    <p class="mb-4">The Public Provident Fund (PPF) is a highly secure, government-backed savings scheme in India that provides a fully tax-free compounding alternative for conservative investors. It enforces a strict 15-year statutory lock-in period, promoting absolute long-term wealth creation.</p>
+                <div class="prose prose-slate max-w-none text-slate-600 mb-12">
+                    <p class="mb-4">The Public Provident Fund (PPF) is a highly secure, government-backed long-term
+                        savings scheme
+                        in India designed for retirement and tax planning. It provides a fully tax-free compounding
+                        alternative for conservative investors. It
+                        enforces a strict 15-year statutory lock-in period, promoting absolute long-term wealth
+                        creation.</p>
                     <div class="bg-teal-50 border-l-4 border-teal-500 p-4 rounded-r-lg mb-6">
-                        <p class="font-medium text-teal-900 m-0"><strong>Core Math/Formula:</strong> Interest is calculated on the minimum balance between the 5th and the end of each month, compounded annually.</p>
+                        <p class="font-medium text-teal-900 m-0"><strong>Current Interest Rate:</strong> For the
+                            January–March 2026 quarter, the PPF interest rate is fixed at 7.1% p.a.</p>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Comprehensive PPF
+                        Rules</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">1. Investment & Eligibility</h4>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Deposit Limits:</strong> Minimum of ₹500 and maximum of ₹1.5 lakh per
+                                    financial year (April–March).</li>
+                                <li><strong>Installments:</strong> Deposits can be made in a lump sum or in unlimited
+                                    installments.</li>
+                                <li><strong>Interest Calculation:</strong> Calculated on the lowest balance between the
+                                    5th and the last day of each month.</li>
+                                <li><strong>Residency:</strong> Only resident Indian citizens can open an account; joint
+                                    accounts are not allowed.</li>
+                                <li><strong>Minors:</strong> Parents or guardians can open an account for a minor, but
+                                    the combined annual investment limit for parent and child is ₹1.5 lakh.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">2. Maturity & Extension</h4>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Maturity Period:</strong> 15 complete financial years from the end of the
+                                    year the account was opened.</li>
+                                <li><strong>Extension Options:</strong> After 15 years, the account can be extended
+                                    indefinitely in 5-year blocks.</li>
+                                <li><strong>With Fresh Deposits:</strong> Requires submitting Form H within one year of
+                                    maturity.</li>
+                                <li><strong>Without Fresh Deposits:</strong> The account extends automatically; the
+                                    existing balance earns interest, and one withdrawal is allowed per year.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">3. Withdrawal & Loan</h4>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Partial Withdrawals:</strong> Allowed once per financial year starting from
+                                    the 7th year (after 6 full years). Limit: Lower of 50% of the balance at the end of
+                                    the 4th preceding year OR 50% of the preceding year's balance.</li>
+                                <li><strong>Loans:</strong> Available from the 3rd to 6th financial year. Limit: Maximum
+                                    25% of the balance at the end of the 2nd year preceding the application. Interest:
+                                    1% higher than the prevailing PPF rate if repaid within 36 months; 6% additional if
+                                    not.</li>
+                                <li><strong>Premature Closure:</strong> Permitted only after 5 years for specific
+                                    reasons like serious illness, higher education, or change in residency status.
+                                    Penalty: Interest is reduced by 1% from the date of account opening.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">4. Tax Benefits (EEE Category)</h4>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Exempt (Investment):</strong> Contributions up to ₹1.5 lakh are deductible
+                                    under Section 80C (available only under the old tax regime).</li>
+                                <li><strong>Exempt (Interest):</strong> Annual interest earned is fully tax-free.</li>
+                                <li><strong>Exempt (Maturity):</strong> The final maturity amount is completely
+                                    tax-free.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                
+
                 <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Common FAQs</h3>
                 <div class="space-y-6">
-                    
+
                     <div>
                         <h4 class="text-lg font-semibold text-slate-800 mb-2">What does "EEE" Tax status mean?</h4>
-                        <p class="text-slate-600 leading-relaxed">PPF Enjoys Exempt-Exempt-Exempt status. Your initial deposit is tax-deductible (under 80C), the interest you earn annually is completely tax-free, and the final maturity amount processed after 15 years is absolutely tax-free.</p>
+                        <p class="text-slate-600 leading-relaxed">PPF Enjoys Exempt-Exempt-Exempt status. Your initial
+                            deposit is tax-deductible (under 80C), the interest you earn annually is completely
+                            tax-free, and the final maturity amount processed after 15 years is absolutely tax-free.</p>
                     </div>
                     <div>
-                        <h4 class="text-lg font-semibold text-slate-800 mb-2">Can I extend my account after 15 years?</h4>
-                        <p class="text-slate-600 leading-relaxed">Yes, you can extend the PPF account in blocks of 5 years indefinitely. You can choose to extend it with further fresh contributions or without further contributions while continuing to earn interest.</p>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">Can I extend my account after 15 years?
+                        </h4>
+                        <p class="text-slate-600 leading-relaxed">Yes, you can extend the PPF account in blocks of 5
+                            years indefinitely. You can choose to extend it with further fresh contributions or without
+                            further contributions while continuing to earn interest.</p>
                     </div>
                 </div>
             </div>

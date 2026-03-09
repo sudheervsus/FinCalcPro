@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'/%3E%3C/svg%3E">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPF Premature Closure & Withdrawal Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Calculate PPF premature closure penalties, loan eligibility, and partial withdrawal limits instantly based on your completed years.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://fincalcpro.app/calculators/ppf-withdrawal/index.html">
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                FinCalcPro <span class="text-teal-300">Savings</span>
+            </a>
+            <div class="text-sm font-medium">PPF Withdrawal & Closure</div>
+        </div>
+    </nav>
+
+    <!-- Ad Slot 1 -->
+    <div class="max-w-7xl mx-auto w-full px-4 mt-6">
+        <div class="ad-slot h-24 rounded-lg w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm"
+            id="AD_SLOT_1">
+            <span>[ AdSense Top Banner ]</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-4 mb-6">
+                    <span class="p-2 bg-rose-100 text-rose-600 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </span>
+                    <h2 class="text-xl font-bold text-slate-800">PPF Current Status</h2>
+                </div>
+
+                <div class="space-y-8 flex flex-col gap-2">
+                    <!-- Current Balance -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Current PPF Balance</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-500">₹</span>
+                                <input type="number" id="balanceInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-teal-800 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="0" step="5000" oninput="syncSlider('balance')">
+                            </div>
+                        </div>
+                        <input type="range" id="balanceSlider" min="0" max="5000000" step="5000" value="0"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                            oninput="syncInput('balance')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹0</span>
+                            <span>₹50L</span>
+                        </div>
+                        <p id="balanceError" class="text-xs text-red-500 font-medium mt-1 hidden"></p>
+                    </div>
+
+                    <!-- Years Completed -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-teal-800">Years Completed</label>
+                            <div class="relative">
+                                <input type="number" id="yearsCompletedInput"
+                                    class="w-20 pr-2 py-1 bg-white border border-teal-300 rounded text-right font-bold text-slate-700 outline-none focus:ring-1 focus:ring-teal-500"
+                                    value="0" min="0" max="15" step="1" oninput="syncSlider('yearsCompleted')">
+                            </div>
+                        </div>
+                        <input type="range" id="yearsCompletedSlider" min="0" max="15" step="1" value="0"
+                            class="w-full h-2 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                            oninput="syncInput('yearsCompleted')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>0 Yrs</span>
+                            <span>15 Yrs</span>
+                        </div>
+                    </div>
+                    <!-- Removed Investment and Strategy Inputs for Withdrawal Calculator -->
+                </div>
+            </div>
+
+            <!-- Content SEO text -->
+            <div
+                class="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm text-sm text-blue-900 leading-relaxed">
+                <p>Public Provident Fund (PPF) enforce strict liquidity rules to maintain long-term compounding
+                    benefits.</p>
+                <p class="mt-2 text-blue-800 font-medium">You cannot withdraw your entire balance anytime. Depending on
+                    how old your account is, you may only be eligible for a <strong>loan</strong>, a <strong>partial
+                        withdrawal</strong>, or a <strong>premature closure with a 1% penalty.</strong></p>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <div class="bg-rose-900 border border-rose-800 rounded-xl shadow-lg p-6 text-white text-center">
+                <p class="text-rose-300 text-sm font-medium mb-1 uppercase tracking-wider">Final Closure Value (After
+                    Penalty)</p>
+                <p class="text-4xl lg:text-5xl font-extrabold text-white" id="closureValueDisplay">₹0</p>
+                <p class="text-xs text-rose-200 mt-2" id="penaltyDisplay">You lose ₹0 to 1% interest restructuring.</p>
+            </div>
+
+            <!-- Option 1: Loan -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full" id="loanStatusDot" style="background-color: #cbd5e1"></span>
+                        1. Loan Against PPF
+                    </h3>
+                    <span id="loanTag"
+                        class="text-[10px] uppercase font-bold px-2 py-1 rounded bg-slate-100 text-slate-500">Not
+                        Eligible</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-3">Available during the 3rd to 6th financial year.</p>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded text-center">
+                    <p class="text-[11px] text-slate-500 mb-1 leading-tight font-semibold">Max Loan Amount</p>
+                    <p class="text-xl font-bold text-slate-800 truncate" id="loanDisplay">₹0</p>
+                </div>
+            </div>
+
+            <!-- Option 2: Withdrawal -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full" id="withdrawalStatusDot"
+                            style="background-color: #cbd5e1"></span>
+                        2. Partial Withdrawal
+                    </h3>
+                    <span id="withdrawalTag"
+                        class="text-[10px] uppercase font-bold px-2 py-1 rounded bg-slate-100 text-slate-500">Not
+                        Eligible</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-3">Available from the 7th financial year onward.</p>
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded text-center">
+                    <p class="text-[11px] text-slate-500 mb-1 leading-tight font-semibold">Max Withdrawable</p>
+                    <p class="text-xl font-bold text-slate-800 truncate" id="withdrawalDisplay">₹0</p>
+                </div>
+            </div>
+
+            <!-- Option 3: Closure status -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full" id="closureStatusDot"
+                            style="background-color: #cbd5e1"></span>
+                        3. Premature Closure
+                    </h3>
+                    <span id="closureTag"
+                        class="text-[10px] uppercase font-bold px-2 py-1 rounded bg-slate-100 text-slate-500">Not
+                        Eligible</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">Permitted only after 5 full financial years for specific
+                    emergencies.</p>
+            </div>
+
+        </div>
+
+        <!-- Article & FAQ Section -->
+        <article class="col-span-1 lg:col-span-12 mt-8 mb-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Understanding PPF Withdrawal & Closure Rules</h2>
+                <div class="prose prose-slate max-w-none text-slate-600 mb-12">
+                    <p class="mb-4">The rules for accessing funds from a Public Provident Fund (PPF) account before its
+                        15-year maturity are strictly tied to the number of completed financial years since the account
+                        was opened. The government restricts liquidity to ensure the fund meets its intended use of
+                        long-term retirement planning.</p>
+                    <div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-lg mb-6">
+                        <p class="font-medium text-rose-900 m-0"><strong>Premature Closure Penalty:</strong> If you
+                            close the account after the 5th year for an emergency, you forfeit 1% interest retroactively
+                            from the date of account opening. This significantly reduces your final corpus.</p>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Liquidity Options
+                        Explained</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">1. Loan Against PPF</h4>
+                            <p class="text-sm mb-3">Instead of breaking the account, borrow against it at nominal rates.
+                            </p>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Timeline:</strong> Available from the 3rd financial year until the end of
+                                    the 6th financial year.</li>
+                                <li><strong>Max Amount:</strong> Maximum 25% of the balance at the end of the 2nd year
+                                    preceding the application year.</li>
+                                <li><strong>Interest & Cost:</strong> Loan interest is charged at 1% higher than the
+                                    prevailing PPF rate (effectively ~8.1%) if repaid within 36 months.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">2. Partial Withdrawal</h4>
+                            <p class="text-sm mb-3">Withdraw a portion completely tax-free without having to pay it
+                                back.</p>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Timeline:</strong> Available from the 7th financial year onwards (after 6
+                                    full years are completed).</li>
+                                <li><strong>Max Amount:</strong> Lower of 50% of the balance at the end of the 4th
+                                    preceding year OR 50% of the preceding year's balance.</li>
+                                <li><strong>Limit:</strong> Only one withdrawal is permitted per financial year.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-2">3. Premature Closure (Breaking the
+                                account entirely)</h4>
+                            <p class="text-sm mb-3">Completely dissolve the account and withdraw all funds after a
+                                penalty.</p>
+                            <ul class="list-disc pl-5 text-slate-600 space-y-2">
+                                <li><strong>Timeline:</strong> Permitted only after 5 full financial years have been
+                                    completed.</li>
+                                <li><strong>Conditions:</strong> Allowed only for specific grounds: life-threatening
+                                    diseases of self/family, higher education of self/children, or change in residency
+                                    status (becoming an NRI).</li>
+                                <li><strong>The Penalty:</strong> 1% deducted from the interest rate for every past year
+                                    since opening.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
