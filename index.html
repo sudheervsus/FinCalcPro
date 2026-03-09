@@ -24,7 +24,8 @@
     </style>
     <link rel="canonical" href="https://fincalcpro.app/index.html">
     <meta property="og:title" content="FinCalcPro - Your Comprehensive Financial Hub">
-    <meta property="og:description" content="Advanced financial calculators for loans, investments, retirement, and tax planning. Master your finances today.">
+    <meta property="og:description"
+        content="Advanced financial calculators for loans, investments, retirement, and tax planning. Master your finances today.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fincalcpro.app/index.html">
 </head>
@@ -66,6 +67,23 @@
                     class="text-indigo-600">Command Center</span></h1>
             <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">Make smarter money decisions with our suite
                 of powerful, precision-engineered calculators.</p>
+            <div class="flex flex-wrap justify-center gap-4 mt-6 text-sm font-semibold">
+                <span
+                    class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full border border-emerald-200 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                        </path>
+                    </svg>
+                    Privacy First
+                </span>
+                <span
+                    class="flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full border border-indigo-200 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    100% Free </span>
+            </div>
         </div>
 
         <div class="space-y-16">
@@ -309,6 +327,59 @@
                                 class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
                                 <strong>How it works:</strong> Simulates compound growth with an expanding contribution
                                 baseline annually.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Fixed Deposit -->
+                    <a href="calculators/fd/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" class="w-6 h-6" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Fixed Deposit Calculator</h3>
+                        <p class="text-sm text-slate-500 mb-4">Calculate maturity amount and interest earned on your FD
+                            investments.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-emerald-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Predicts maturity using different compounding
+                                frequencies.
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Recurring Deposit -->
+                    <a href="calculators/rd/index.html"
+                        class="relative block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-1 hover:border-emerald-300 transition-all group overflow-hidden">
+                        <div
+                            class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" class="w-6 h-6" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-800 mb-2">Recurring Deposit</h3>
+                        <p class="text-sm text-slate-500 mb-4">Calculate your RD maturity amount and total interest
+                            earned.</p>
+                        <div class="absolute top-4 right-4 text-slate-400 hover:text-emerald-500 cursor-help">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <div
+                                class="tooltip absolute z-10 w-48 p-2 bg-slate-800 text-white text-xs rounded shadow-lg -translate-x-full ml-[-10px] opacity-0 invisible transition-all">
+                                <strong>How it works:</strong> Employs quarterly compounding math for monthly deposits.
                             </div>
                         </div>
                     </a>

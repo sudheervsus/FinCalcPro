@@ -1,12 +1,12 @@
 const formatRupee = (num) => '₹' + Math.round(num).toLocaleString('en-IN');
 
-let lumpChartInstance = null;
+let fdChartInstance = null;
 
 function initChart() {
-    if (typeof document !== 'undefined' && document.getElementById('lumpChart')) {
-        const ctx = document.getElementById('lumpChart').getContext('2d');
+    if (typeof document !== 'undefined' && document.getElementById('fdChart')) {
+        const ctx = document.getElementById('fdChart').getContext('2d');
         const data = {
-            labels: ['Total Investment', 'Est. Returns'],
+            labels: ['Principal Amount', 'Total Interest'],
             datasets: [{
                 data: [50, 50],
                 backgroundColor: ['#94a3b8', '#10b981'], // slate-400, emerald-500
@@ -45,14 +45,14 @@ function initChart() {
             }
         };
 
-        lumpChartInstance = new Chart(ctx, config);
+        fdChartInstance = new Chart(ctx, config);
     }
 }
 
 function updateChart(principalAmount, returnsAmount) {
-    if (lumpChartInstance) {
-        lumpChartInstance.data.datasets[0].data = [principalAmount, returnsAmount];
-        lumpChartInstance.update();
+    if (fdChartInstance) {
+        fdChartInstance.data.datasets[0].data = [principalAmount, returnsAmount];
+        fdChartInstance.update();
     }
 }
 
@@ -72,22 +72,22 @@ function changeTimeType() {
 
     if (timeType === 'mo') {
         slider.min = 6;
-        slider.max = 480;
+        slider.max = 360;
         slider.step = 1;
         input.step = 1;
-        val = Math.max(6, Math.round(val * 12));
+        val = Math.round(val * 12);
         unitLabel.textContent = "Mo";
         minLabel.textContent = "6 Mo";
-        maxLabel.textContent = "480 Mo";
+        maxLabel.textContent = "360 Mo";
     } else {
         slider.min = 0.5;
-        slider.max = 40;
+        slider.max = 30;
         slider.step = 0.5;
         input.step = 0.5;
-        val = Math.max(0.5, Number((val / 12).toFixed(1)));
+        val = Number((val / 12).toFixed(1));
         unitLabel.textContent = "Yr";
-        minLabel.textContent = "0.5 Yr";
-        maxLabel.textContent = "40 Yrs";
+        minLabel.textContent = "6 Mo";
+        maxLabel.textContent = "30 Yrs";
     }
 
     input.value = val;
@@ -116,10 +116,10 @@ function syncSlider(id) {
         const timeType = document.getElementById('timeTypeSelect') ? document.getElementById('timeTypeSelect').value : 'yr';
         if (timeType === 'mo') {
             if (val < 6) val = 6;
-            if (val > 480) val = 480;
+            if (val > 360) val = 360;
         } else {
             if (val < 0.5) val = 0.5;
-            if (val > 40) val = 40;
+            if (val > 30) val = 30;
         }
     }
 
@@ -135,13 +135,14 @@ function calculate() {
     const timeVal = parseFloat(document.getElementById('timeInput').value) || 0;
     const timeType = document.getElementById('timeTypeSelect') ? document.getElementById('timeTypeSelect').value : 'yr';
     const tYears = timeType === 'mo' ? timeVal / 12 : timeVal;
+    const n = parseInt(document.getElementById('compoundingSelect').value) || 4; // Frequency per year
 
-    // Lumpsum Standard Compounding Formula: A = P(1 + r/100)^t
+    // Compounding Formula: A = P(1 + r/100/n)^(n*t)
     const r = rateAnnual / 100;
 
     let maturityAmount = 0;
     if (tYears > 0) {
-        maturityAmount = p * Math.pow(1 + r, tYears);
+        maturityAmount = p * Math.pow(1 + (r / n), n * tYears);
     } else {
         maturityAmount = p; // fallback
     }

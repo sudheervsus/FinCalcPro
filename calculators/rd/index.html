@@ -7,21 +7,21 @@
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'/%3E%3C/svg%3E">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lumpsum Investment Calculator | FinCalcPro</title>
+    <title>Recurring Deposit (RD) Calculator | FinCalcPro</title>
     <meta name="description"
-        content="Predict future maturity values for your one-time bulk Lumpsum investments like Mutual Funds and FDs.">
+        content="Calculate your Recurring Deposit (RD) maturity amount and total interest earned on your monthly investments.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../style.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
         crossorigin="anonymous"></script>
-    <link rel="canonical" href="https://fincalcpro.app/calculators/lumpsum/index.html">
-    <meta property="og:title" content="Lumpsum Investment Calculator | FinCalcPro">
+    <link rel="canonical" href="https://fincalcpro.app/calculators/rd/index.html">
+    <meta property="og:title" content="Recurring Deposit (RD) Calculator | FinCalcPro">
     <meta property="og:description"
-        content="Predict future maturity values for your one-time bulk Lumpsum investments like Mutual Funds and FDs.">
+        content="Calculate your Recurring Deposit (RD) maturity amount and total interest earned on your monthly investments.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fincalcpro.app/calculators/lumpsum/index.html">
+    <meta property="og:url" content="https://fincalcpro.app/calculators/rd/index.html">
 </head>
 
 <body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
@@ -37,7 +37,7 @@
                 </svg>
                 FinCalcPro <span class="text-emerald-300">Wealth</span>
             </a>
-            <div class="text-sm font-medium">Lumpsum Calculator</div>
+            <div class="text-sm font-medium">RD Calculator</div>
         </div>
     </nav>
 
@@ -58,55 +58,55 @@
                 <div class="flex justify-between items-center border-b border-slate-100 pb-4 mb-6">
                     <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
                         <span class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" fill="none" class="w-6 h-6" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm-7 5a2 2 0 11-4 0 2 2 0 014 0z">
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
                                 </path>
                             </svg>
                         </span>
-                        Returns Estimator
+                        RD Yield Estimator
                     </h1>
                 </div>
 
                 <!-- Sliders -->
                 <div class="space-y-8">
-                    <!-- Total Investment -->
+                    <!-- Monthly Investment -->
                     <div>
                         <div class="flex justify-between mb-2">
-                            <label class="block text-sm font-semibold text-slate-600">Total Investment</label>
+                            <label class="block text-sm font-semibold text-slate-600">Monthly Deposit</label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1 text-slate-400">₹</span>
                                 <input type="number" id="principalInput"
                                     class="w-32 pl-7 pr-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
-                                    value="100000" oninput="syncSlider('principal')">
+                                    value="5000" oninput="syncSlider('principal')">
                             </div>
                         </div>
-                        <input type="range" id="principalSlider" min="5000" max="10000000" step="5000" value="100000"
+                        <input type="range" id="principalSlider" min="500" max="1000000" step="500" value="5000"
                             class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                             oninput="syncInput('principal')">
                         <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
-                            <span>₹5K</span>
-                            <span>₹1 Cr</span>
+                            <span>₹500</span>
+                            <span>₹10L</span>
                         </div>
                     </div>
 
                     <!-- Expected Return Rate -->
                     <div>
                         <div class="flex justify-between mb-2">
-                            <label class="block text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
+                            <label class="block text-sm font-semibold text-slate-600">Interest Rate (p.a)</label>
                             <div class="relative">
                                 <input type="number" id="rateInput"
                                     class="w-24 pl-2 pr-7 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
-                                    value="12" step="0.5" oninput="syncSlider('rate')">
+                                    value="7.5" step="0.1" oninput="syncSlider('rate')">
                                 <span class="absolute right-3 top-1 text-slate-400">%</span>
                             </div>
                         </div>
-                        <input type="range" id="rateSlider" min="1" max="50" step="0.5" value="12"
+                        <input type="range" id="rateSlider" min="1" max="15" step="0.1" value="7.5"
                             class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                             oninput="syncInput('rate')">
                         <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
                             <span>1%</span>
-                            <span>50%</span>
+                            <span>15%</span>
                         </div>
                     </div>
 
@@ -125,16 +125,16 @@
                             <div class="relative">
                                 <input type="number" id="timeInput"
                                     class="w-28 pl-2 pr-10 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
-                                    value="10" step="0.5" oninput="syncSlider('time')">
+                                    value="5" step="0.5" oninput="syncSlider('time')">
                                 <span id="timeUnitLabel" class="absolute right-3 top-1 text-slate-400">Yr</span>
                             </div>
                         </div>
-                        <input type="range" id="timeSlider" min="1" max="40" step="0.5" value="10"
+                        <input type="range" id="timeSlider" min="0.5" max="20" step="0.5" value="5"
                             class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
                             oninput="syncInput('time')">
                         <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
-                            <span id="timeMinLabel">1 Yr</span>
-                            <span id="timeMaxLabel">40 Yrs</span>
+                            <span id="timeMinLabel">6 Mo</span>
+                            <span id="timeMaxLabel">20 Yrs</span>
                         </div>
                     </div>
 
@@ -144,10 +144,11 @@
             <!-- Content SEO text -->
             <div
                 class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 shadow-sm text-sm text-emerald-900 leading-relaxed">
-                <p>Unlike a SIP where you invest incrementally, a <strong>Lumpsum investment</strong> means you allocate
-                    your entire capital pool at exactly Day 1.</p>
-                <p class="mt-2 text-emerald-700">Calculates purely on standard Mutual Fund and Market expectation
-                    compounding.</p>
+                <p>A <strong>Recurring Deposit (RD)</strong> is a popular savings scheme where you invest a fixed amount
+                    every month for a predefined term and earn a fixed interest rate, typically compounded quarterly in
+                    India.</p>
+                <p class="mt-2 text-emerald-700">Earnings from RD are taxable according to your income tax slab. Banks
+                    may deduct TDS on the interest earned.</p>
             </div>
 
         </div>
@@ -156,7 +157,7 @@
         <div class="lg:col-span-5 flex flex-col gap-6">
 
             <div class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center">
-                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Estimated Wealth</p>
+                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Total Maturity Value</p>
                 <p class="text-4xl lg:text-5xl font-extrabold text-emerald-400" id="totalValueDisplay">₹0</p>
             </div>
 
@@ -164,18 +165,18 @@
                 <!-- Data breakdown Grid -->
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="p-4 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center">
-                        <p class="text-xs font-semibold text-slate-500 uppercase">Invested Amount</p>
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Total Deposit</p>
                         <p class="text-xl font-bold text-slate-800 mt-1" id="investedAmountDisplay">₹0</p>
                     </div>
                     <div class="p-4 bg-emerald-50 rounded-lg border border-emerald-100 flex flex-col items-center">
-                        <p class="text-xs font-semibold text-emerald-600 uppercase">Expected Returns</p>
+                        <p class="text-xs font-semibold text-emerald-600 uppercase">Total Interest</p>
                         <p class="text-xl font-bold text-emerald-700 mt-1" id="estReturnsDisplay">₹0</p>
                     </div>
                 </div>
 
                 <!-- Donut Chart -->
                 <div class="relative h-64 w-full flex justify-center items-center">
-                    <canvas id="lumpChart"></canvas>
+                    <canvas id="rdChart"></canvas>
                 </div>
             </div>
 
@@ -184,31 +185,62 @@
         <!-- Article & FAQ Section -->
         <article class="col-span-1 lg:col-span-12 mt-8 mb-4">
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-                <h2 class="text-2xl font-bold text-slate-800 mb-4">Maximizing Lumpsum Mutual Fund Returns</h2>
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Understanding Recurring Deposits (RDs)</h2>
                 <div class="prose prose-slate max-w-none text-slate-600 mb-8">
-                    <p class="mb-4">A Lumpsum investment is a single, bulk deposit made at one time. Unlike a SIP, the
-                        entire amount is exposed to the market from day one, giving the entire capital maximum time to
-                        compound and grow over your target horizon.</p>
+                    <p class="mb-4">Recurring Deposits are an excellent way to save money and earn guaranteed returns
+                        without needing a large lump sum. By committing a set amount every month, you can easily build a
+                        sizable corpus over time. It's especially useful for achieving short to medium-term financial
+                        goals.</p>
                     <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-lg mb-6">
-                        <p class="font-medium text-emerald-900 m-0"><strong>Core Math/Formula:</strong> Expected Value =
-                            P(1 + r/100)^t</p>
+                        <p class="font-medium text-emerald-900 m-0"><strong>Calculation Fact:</strong> In India, most
+                            banks compound RD interest quarterly, though deposits are made monthly.</p>
                     </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-8">How to use this RD Calculator?</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-600">
+                        <li><strong>Enter Monthly Deposit:</strong> Input the amount you're comfortable setting aside
+                            from your income every month.</li>
+                        <li><strong>Set Interest Rate:</strong> Provide the annual interest rate offered by your bank
+                            for recurring deposits.</li>
+                        <li><strong>Choose Time Period:</strong> Select whether your RD tenure is in Years or Months and
+                            input the total duration of the deposit.</li>
+                        <li><strong>View Results:</strong> The calculator instantly works out the math (factoring in
+                            quarterly compounding on your monthly inputs) and will give you a detailed breakdown of your
+                            overall investment and maturity amount.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-8">Advantages of using an RD Calculator</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-600">
+                        <li><strong>Encourages Discipline:</strong> Seeing the projected returns of a small, regular
+                            monthly commitment reinforces financial discipline and saving habits without feeling
+                            overwhelming.</li>
+                        <li><strong>Accurate Planning:</strong> Predict your total maturity amount allowing you to
+                            successfully achieve short-to-mid term savings goals effortlessly.</li>
+                        <li><strong>Error-Free:</strong> The math behind calculating RD interest is quite tedious since
+                            compounding occurs quarterly while deposits are added monthly; this calculator automates the
+                            process flawlessly.</li>
+                        <li><strong>Compare Different Rates:</strong> A difference of just 0.5% in interest rates can
+                            significantly affect your maturity amount; an RD calculator helps you assess exactly how
+                            much you can earn before locking into a bank's rates.</li>
+                    </ul>
                 </div>
 
                 <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Common FAQs</h3>
                 <div class="space-y-6">
 
                     <div>
-                        <h4 class="text-lg font-semibold text-slate-800 mb-2">Is Lumpsum better than SIP?</h4>
-                        <p class="text-slate-600 leading-relaxed">If you have a large corpus and a high risk appetite,
-                            lumpsum investments generally yield higher returns over a long 10-15 year horizon simply
-                            because your capital spends more time in the market.</p>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">Can I withdraw my RD before maturity?</h4>
+                        <p class="text-slate-600 leading-relaxed">Yes, premature withdrawal is possible but usually
+                            comes with a penalty. The bank will typically calculate interest at a rate lower than
+                            initially agreed upon.</p>
                     </div>
                     <div>
-                        <h4 class="text-lg font-semibold text-slate-800 mb-2">Are lumpsum returns guaranteed?</h4>
-                        <p class="text-slate-600 leading-relaxed">No, if invested in equity mutual funds or stocks,
-                            returns are subject to market volatility. However, standard FDs or bonds offer guaranteed
-                            lumpsum returns.</p>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">What is the difference between RD and SIP?
+                        </h4>
+                        <p class="text-slate-600 leading-relaxed">Both require regular monthly investments. While RDs
+                            offer guaranteed, fixed interest rates, SIPs are market-linked (mutual funds) and thus
+                            subject to market risks, although they offer potentially higher returns over the long term.
+                        </p>
                     </div>
                 </div>
             </div>

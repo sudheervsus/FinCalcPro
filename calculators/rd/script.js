@@ -1,12 +1,12 @@
 const formatRupee = (num) => '₹' + Math.round(num).toLocaleString('en-IN');
 
-let lumpChartInstance = null;
+let rdChartInstance = null;
 
 function initChart() {
-    if (typeof document !== 'undefined' && document.getElementById('lumpChart')) {
-        const ctx = document.getElementById('lumpChart').getContext('2d');
+    if (typeof document !== 'undefined' && document.getElementById('rdChart')) {
+        const ctx = document.getElementById('rdChart').getContext('2d');
         const data = {
-            labels: ['Total Investment', 'Est. Returns'],
+            labels: ['Total Deposit', 'Total Interest'],
             datasets: [{
                 data: [50, 50],
                 backgroundColor: ['#94a3b8', '#10b981'], // slate-400, emerald-500
@@ -45,14 +45,14 @@ function initChart() {
             }
         };
 
-        lumpChartInstance = new Chart(ctx, config);
+        rdChartInstance = new Chart(ctx, config);
     }
 }
 
-function updateChart(principalAmount, returnsAmount) {
-    if (lumpChartInstance) {
-        lumpChartInstance.data.datasets[0].data = [principalAmount, returnsAmount];
-        lumpChartInstance.update();
+function updateChart(totalDeposit, totalInterest) {
+    if (rdChartInstance) {
+        rdChartInstance.data.datasets[0].data = [totalDeposit, totalInterest];
+        rdChartInstance.update();
     }
 }
 
@@ -72,22 +72,22 @@ function changeTimeType() {
 
     if (timeType === 'mo') {
         slider.min = 6;
-        slider.max = 480;
+        slider.max = 240;
         slider.step = 1;
         input.step = 1;
-        val = Math.max(6, Math.round(val * 12));
+        val = Math.round(val * 12);
         unitLabel.textContent = "Mo";
         minLabel.textContent = "6 Mo";
-        maxLabel.textContent = "480 Mo";
+        maxLabel.textContent = "240 Mo";
     } else {
         slider.min = 0.5;
-        slider.max = 40;
+        slider.max = 20;
         slider.step = 0.5;
         input.step = 0.5;
-        val = Math.max(0.5, Number((val / 12).toFixed(1)));
+        val = Number((val / 12).toFixed(1));
         unitLabel.textContent = "Yr";
-        minLabel.textContent = "0.5 Yr";
-        maxLabel.textContent = "40 Yrs";
+        minLabel.textContent = "6 Mo";
+        maxLabel.textContent = "20 Yrs";
     }
 
     input.value = val;
@@ -107,8 +107,8 @@ function syncSlider(id) {
 
     // boundaries
     if (id === 'principal') {
-        if (val < 5000) val = 5000;
-        if (val > 100000000) val = 100000000;
+        if (val < 500) val = 500;
+        if (val > 1000000) val = 1000000;
     } else if (id === 'rate') {
         if (val < 1) val = 1;
         if (val > 100) val = 100;
@@ -116,10 +116,10 @@ function syncSlider(id) {
         const timeType = document.getElementById('timeTypeSelect') ? document.getElementById('timeTypeSelect').value : 'yr';
         if (timeType === 'mo') {
             if (val < 6) val = 6;
-            if (val > 480) val = 480;
+            if (val > 240) val = 240;
         } else {
             if (val < 0.5) val = 0.5;
-            if (val > 40) val = 40;
+            if (val > 20) val = 20;
         }
     }
 
@@ -130,30 +130,33 @@ function syncSlider(id) {
 }
 
 function calculate() {
-    const p = parseFloat(document.getElementById('principalInput').value) || 0;
+    const monthlyDeposit = parseFloat(document.getElementById('principalInput').value) || 0;
     const rateAnnual = parseFloat(document.getElementById('rateInput').value) || 0;
     const timeVal = parseFloat(document.getElementById('timeInput').value) || 0;
     const timeType = document.getElementById('timeTypeSelect') ? document.getElementById('timeTypeSelect').value : 'yr';
     const tYears = timeType === 'mo' ? timeVal / 12 : timeVal;
 
-    // Lumpsum Standard Compounding Formula: A = P(1 + r/100)^t
+    // RD Calculation: Quarterly compounding
+    const n = 4; // Frequency per year (Quarterly)
     const r = rateAnnual / 100;
+    const totalMonths = tYears * 12;
 
     let maturityAmount = 0;
-    if (tYears > 0) {
-        maturityAmount = p * Math.pow(1 + r, tYears);
-    } else {
-        maturityAmount = p; // fallback
+    for (let i = 1; i <= totalMonths; i++) {
+        // Time remaining in years for this specific deposit
+        let t = (totalMonths - i + 1) / 12;
+        maturityAmount += monthlyDeposit * Math.pow(1 + (r / n), n * t);
     }
 
-    const estReturns = maturityAmount - p;
+    const totalDepositAmount = monthlyDeposit * totalMonths;
+    const totalInterest = maturityAmount - totalDepositAmount;
 
     // Output to UI
-    document.getElementById('investedAmountDisplay').textContent = formatRupee(p);
-    document.getElementById('estReturnsDisplay').textContent = formatRupee(estReturns);
+    document.getElementById('investedAmountDisplay').textContent = formatRupee(totalDepositAmount);
+    document.getElementById('estReturnsDisplay').textContent = formatRupee(totalInterest);
     document.getElementById('totalValueDisplay').textContent = formatRupee(maturityAmount);
 
-    updateChart(p, estReturns);
+    updateChart(totalDepositAmount, totalInterest);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
