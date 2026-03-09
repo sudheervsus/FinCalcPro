@@ -170,13 +170,27 @@ function calculate() {
     const errorEl = document.getElementById('balanceError');
     if (errorEl) {
         let maxTheoretical = 0;
-        for (let i = 1; i <= yearsCompleted; i++) {
+        let dTheoretical = new Date(openingDate);
+        for (let y = 0; y < yearsCompleted; y++) {
             maxTheoretical += 150000;
-            maxTheoretical += maxTheoretical * 0.071;
+            let yrInt = 0;
+            for (let m = 0; m < 12; m++) {
+                yrInt += maxTheoretical * (getRateForMonth(dTheoretical, false) / 100) / 12;
+                dTheoretical.setMonth(dTheoretical.getMonth() + 1);
+            }
+            maxTheoretical += yrInt;
         }
+
         if (currentBalance > maxTheoretical && yearsCompleted > 0) {
-            errorEl.textContent = `Note: Max valid balance for ${yearsCompleted} yrs is ~${formatRupee(maxTheoretical)}. Results are extrapolated.`;
+            errorEl.textContent = `Invalid Input: Maximum possible PPF balance for ${yearsCompleted} yrs is exactly ~${formatRupee(maxTheoretical)}.`;
             errorEl.classList.remove('hidden');
+
+            // User requested: "If the amount is not correct don't show any amount in the result."
+            // We forcefully zero out all histories so calculations below render as 0.
+            pastBalances = new Array(pastBalances.length).fill(0);
+            pastBalancesPenalized = new Array(pastBalancesPenalized.length).fill(0);
+            estYearlyInvestment = 0;
+
         } else if (yearsCompleted === 0 && currentBalance > 0) {
             errorEl.textContent = `You cannot have a current balance for 0 years completed.`;
             errorEl.classList.remove('hidden');
