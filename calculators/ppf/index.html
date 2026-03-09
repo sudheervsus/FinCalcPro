@@ -18,7 +18,8 @@
         crossorigin="anonymous"></script>
     <link rel="canonical" href="https://fincalcpro.app/calculators/ppf/index.html">
     <meta property="og:title" content="PPF Calculator | FinCalcPro">
-    <meta property="og:description" content="Calculate your Public Provident Fund (PPF) maturity amount, total interest earned, and yearly balance over the 15-year lock-in period.">
+    <meta property="og:description"
+        content="Calculate your Public Provident Fund (PPF) maturity amount, total interest earned, and yearly balance over the 15-year lock-in period.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fincalcpro.app/calculators/ppf/index.html">
 </head>
@@ -54,14 +55,25 @@
         <!-- Left Column: Inputs -->
         <div class="lg:col-span-7 flex flex-col gap-6">
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
-                <div class="flex items-center gap-2 border-b border-slate-100 pb-4 mb-6">
-                    <span class="p-2 bg-teal-100 text-teal-600 rounded-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div
+                    class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="p-2 bg-teal-100 text-teal-600 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-800">PPF Investment Details</h2>
+                    </div>
+                    <a href="../ppf-withdrawal/index.html"
+                        class="self-start md:self-auto px-4 py-2 bg-teal-50 hover:bg-teal-100 text-teal-700 text-sm font-semibold rounded-lg border border-teal-200 transition-colors flex items-center gap-2">
+                        Withdrawal Calculator
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                         </svg>
-                    </span>
-                    <h2 class="text-xl font-bold text-slate-800">PPF Investment Details</h2>
+                    </a>
                 </div>
 
                 <div class="space-y-8 flex flex-col gap-2">
