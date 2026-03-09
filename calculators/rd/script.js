@@ -6,22 +6,53 @@ function initChart() {
     if (typeof document !== 'undefined' && document.getElementById('rdChart')) {
         const ctx = document.getElementById('rdChart').getContext('2d');
         const data = {
-            labels: ['Total Deposit', 'Total Interest'],
-            datasets: [{
-                data: [50, 50],
-                backgroundColor: ['#94a3b8', '#10b981'], // slate-400, emerald-500
-                borderWidth: 0,
-                hoverOffset: 4
-            }]
+            labels: [],
+            datasets: [
+                {
+                    label: 'Total Deposit',
+                    data: [],
+                    backgroundColor: '#94a3b8', // slate-400
+                    borderWidth: 0,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Est. Returns',
+                    data: [],
+                    backgroundColor: '#10b981', // emerald-500
+                    borderWidth: 0,
+                    borderRadius: 4
+                }
+            ]
         };
 
         const config = {
-            type: 'doughnut',
+            type: 'bar',
             data: data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: '75%',
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false }
+                    },
+                    y: {
+                        stacked: true,
+                        border: { display: false },
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
+                        }
+                    }
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -34,7 +65,7 @@ function initChart() {
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                let label = context.label || '';
+                                let label = context.dataset.label || '';
                                 if (label) label += ': ';
                                 label += formatRupee(context.raw);
                                 return label;
@@ -49,9 +80,11 @@ function initChart() {
     }
 }
 
-function updateChart(totalDeposit, totalInterest) {
+function updateChart(labels, principalData, returnsData) {
     if (rdChartInstance) {
-        rdChartInstance.data.datasets[0].data = [totalDeposit, totalInterest];
+        rdChartInstance.data.labels = labels;
+        rdChartInstance.data.datasets[0].data = principalData;
+        rdChartInstance.data.datasets[1].data = returnsData;
         rdChartInstance.update();
     }
 }
@@ -136,14 +169,39 @@ function calculate() {
     const timeType = document.getElementById('timeTypeSelect') ? document.getElementById('timeTypeSelect').value : 'yr';
     const tYears = timeType === 'mo' ? timeVal / 12 : timeVal;
 
+    let chartLabels = [];
+    let principalData = [];
+    let returnsData = [];
+
     // RD Calculation: Quarterly compounding
     const n = 4; // Frequency per year (Quarterly)
     const r = rateAnnual / 100;
     const totalMonths = tYears * 12;
 
     let maturityAmount = 0;
+    const totalYearsInt = Math.ceil(tYears);
+
+    for (let year = 1; year <= totalYearsInt; year++) {
+        let currentY = (year > tYears) ? tYears : year;
+        if (timeType === 'mo') {
+            chartLabels.push(Math.round(currentY * 12) + ' Mo');
+        } else {
+            chartLabels.push('Year ' + currentY);
+        }
+
+        let monthsAtYear = Math.round(currentY * 12);
+        let amountAtYear = 0;
+        for (let i = 1; i <= monthsAtYear; i++) {
+            let t = (monthsAtYear - i + 1) / 12;
+            amountAtYear += monthlyDeposit * Math.pow(1 + (r / n), n * t);
+        }
+
+        principalData.push(monthlyDeposit * monthsAtYear);
+        returnsData.push(amountAtYear - (monthlyDeposit * monthsAtYear));
+    }
+
+    // Final total calculation
     for (let i = 1; i <= totalMonths; i++) {
-        // Time remaining in years for this specific deposit
         let t = (totalMonths - i + 1) / 12;
         maturityAmount += monthlyDeposit * Math.pow(1 + (r / n), n * t);
     }
@@ -156,7 +214,7 @@ function calculate() {
     document.getElementById('estReturnsDisplay').textContent = formatRupee(totalInterest);
     document.getElementById('totalValueDisplay').textContent = formatRupee(maturityAmount);
 
-    updateChart(totalDepositAmount, totalInterest);
+    updateChart(chartLabels, principalData, returnsData);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

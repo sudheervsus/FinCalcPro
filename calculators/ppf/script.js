@@ -6,22 +6,60 @@ function initChart() {
     if (typeof document !== 'undefined' && document.getElementById('ppfChart')) {
         const ctx = document.getElementById('ppfChart').getContext('2d');
         const data = {
-            labels: ['Current Balance', 'Future Investment', 'Future Interest Gained'],
-            datasets: [{
-                data: [0, 50, 50],
-                backgroundColor: ['#3b82f6', '#94a3b8', '#0d9488'], // blue-500, slate-400, teal-600
-                borderWidth: 0,
-                hoverOffset: 4
-            }]
+            labels: [],
+            datasets: [
+                {
+                    label: 'Current Balance',
+                    data: [],
+                    backgroundColor: '#3b82f6', // blue-500
+                    borderWidth: 0,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Future Investment',
+                    data: [],
+                    backgroundColor: '#94a3b8', // slate-400
+                    borderWidth: 0,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Future Interest',
+                    data: [],
+                    backgroundColor: '#0d9488', // teal-600
+                    borderWidth: 0,
+                    borderRadius: 4
+                }
+            ]
         };
 
         const config = {
-            type: 'doughnut',
+            type: 'bar',
             data: data,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                cutout: '70%',
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false }
+                    },
+                    y: {
+                        stacked: true,
+                        border: { display: false },
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
+                        }
+                    }
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -34,7 +72,7 @@ function initChart() {
                     tooltip: {
                         callbacks: {
                             label: function (context) {
-                                let label = context.label || '';
+                                let label = context.dataset.label || '';
                                 if (label) label += ': ';
                                 label += formatRupee(context.raw);
                                 return label;
@@ -49,9 +87,12 @@ function initChart() {
     }
 }
 
-function updateChart(balance, invested, interest) {
+function updateChart(labels, balData, invData, intData) {
     if (ppfChartInstance) {
-        ppfChartInstance.data.datasets[0].data = [balance, invested, interest];
+        ppfChartInstance.data.labels = labels;
+        ppfChartInstance.data.datasets[0].data = balData;
+        ppfChartInstance.data.datasets[1].data = invData;
+        ppfChartInstance.data.datasets[2].data = intData;
         ppfChartInstance.update();
     }
 }
@@ -181,7 +222,13 @@ function calculate() {
         investInExtension = false;
     }
 
+    let chartLabels = [];
+    let balData = [];
+    let invData = [];
+    let intData = [];
+
     for (let i = 1; i <= futureYearsToSimulate; i++) {
+        chartLabels.push('Yr ' + (yearsCompleted + i));
         let isExtensionYear = (i > initialRemainingYears);
         let makeDeposit = false;
 
@@ -198,8 +245,6 @@ function calculate() {
 
         let interest = 0;
         if (makeDeposit && freq === 'monthly') {
-            // formula: bal * rate + (monthly * 78) * rate / 12
-            // 78/12 = 6.5
             interest = balance * (rate / 100) + investmentAmount * 6.5 * (rate / 100);
         } else if (makeDeposit && freq === 'yearly') {
             interest = (balance + yearlyAdded) * (rate / 100);
@@ -208,6 +253,10 @@ function calculate() {
         }
 
         balance += yearlyAdded + interest;
+
+        balData.push(currentBalance);
+        invData.push(totalInvested);
+        intData.push(balance - currentBalance - totalInvested);
     }
 
     let estReturns = balance - (currentBalance + totalInvested);
@@ -220,7 +269,14 @@ function calculate() {
     document.getElementById('interestDisplay').textContent = formatRupee(estReturns);
     document.getElementById('maturityDisplay').textContent = formatRupee(balance);
 
-    updateChart(currentBalance, totalInvested, estReturns);
+    if (futureYearsToSimulate === 0) {
+        chartLabels.push('Yr ' + yearsCompleted);
+        balData.push(currentBalance);
+        invData.push(0);
+        intData.push(0);
+    }
+
+    updateChart(chartLabels, balData, invData, intData);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

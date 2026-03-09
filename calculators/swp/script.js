@@ -2,62 +2,103 @@ const formatRupee = (num) => '₹' + Math.round(num).toLocaleString('en-IN');
 
 let swpChartInstance = null;
 
-// Initialize Chart.js
 function initChart() {
-    const ctx = document.getElementById('swpChart').getContext('2d');
+    if (typeof document !== 'undefined' && document.getElementById('swpChart')) {
+        const ctx = document.getElementById('swpChart').getContext('2d');
+        const data = {
+            labels: [],
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Remaining Balance',
+                    data: [],
+                    borderColor: '#f43f5e', // rose-500
+                    backgroundColor: '#f43f5e',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    yAxisID: 'y1'
+                },
+                {
+                    type: 'bar',
+                    label: 'Total Withdrawn',
+                    data: [],
+                    backgroundColor: '#10b981', // emerald-500
+                    yAxisID: 'y'
+                }
+            ]
+        };
 
-    // Default data before calculation
-    const data = {
-        labels: ['Total Withdrawal', 'Final Value'],
-        datasets: [{
-            data: [50, 50],
-            backgroundColor: ['#10b981', '#94a3b8'], // emerald-500 and slate-400
-            hoverBackgroundColor: ['#059669', '#64748b'],
-            borderWidth: 0,
-            hoverOffset: 4
-        }]
-    };
-
-    const config = {
-        type: 'doughnut',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '75%',
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        usePointStyle: true,
-                        padding: 20,
-                        font: {
-                            family: 'Inter, system-ui, sans-serif',
-                            size: 13
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    x: {
+                        grid: { display: false }
+                    },
+                    y: {
+                        position: 'left',
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
+                        }
+                    },
+                    y1: {
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        ticks: {
+                            callback: function (value) {
+                                if (value >= 10000000) return '₹' + (value / 10000000).toFixed(1) + 'Cr';
+                                if (value >= 100000) return '₹' + (value / 100000).toFixed(1) + 'L';
+                                if (value >= 1000) return '₹' + (value / 1000).toFixed(0) + 'K';
+                                return '₹' + value;
+                            }
                         }
                     }
                 },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            let label = context.label || '';
-                            if (label) label += ': ';
-                            label += formatRupee(context.raw);
-                            return label;
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20,
+                            font: { family: 'Inter, system-ui, sans-serif', size: 13 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.dataset.label || '';
+                                if (label) label += ': ';
+                                label += formatRupee(context.raw);
+                                return label;
+                            }
                         }
                     }
                 }
             }
-        }
-    };
+        };
 
-    swpChartInstance = new Chart(ctx, config);
+        swpChartInstance = new Chart(ctx, config);
+    }
 }
 
 // Update the chart with new data
-function updateChart(withdrawal, finalValue) {
+function updateChart(labels, balanceData, withdrawnData) {
     if (swpChartInstance) {
-        swpChartInstance.data.datasets[0].data = [withdrawal, finalValue];
+        swpChartInstance.data.labels = labels;
+        swpChartInstance.data.datasets[0].data = balanceData;
+        swpChartInstance.data.datasets[1].data = withdrawnData;
         swpChartInstance.update();
     }
 }
@@ -106,22 +147,39 @@ function calculateSWP() {
     let depletedMonth = 0;
     let isDepleted = false;
 
-    for (let i = 1; i <= n; i++) {
-        // Add interest for the month (beginning of month balance)
-        const interest = balance * R;
-        balance += interest;
+    let chartLabels = [];
+    let balanceData = [];
+    let withdrawnData = [];
 
-        // Subtract withdrawal at the end of the month
-        if (balance >= W) {
-            balance -= W;
-            totalWithdrawn += W;
-        } else {
-            totalWithdrawn += balance;
-            balance = 0;
-            depletedMonth = i;
-            isDepleted = true;
-            break;
+    const totalYearsInt = Math.ceil(tYears);
+
+    for (let year = 1; year <= totalYearsInt; year++) {
+        let currentMonthLimit = year * 12;
+        if (currentMonthLimit > n) currentMonthLimit = n;
+
+        for (let i = ((year - 1) * 12) + 1; i <= currentMonthLimit; i++) {
+            if (isDepleted) break;
+
+            const interest = balance * R;
+            balance += interest;
+
+            if (balance >= W) {
+                balance -= W;
+                totalWithdrawn += W;
+            } else {
+                totalWithdrawn += balance;
+                balance = 0;
+                depletedMonth = i;
+                isDepleted = true;
+                break;
+            }
         }
+
+        chartLabels.push('Year ' + year);
+        balanceData.push(balance);
+        withdrawnData.push(totalWithdrawn);
+
+        if (isDepleted) break;
     }
 
     const finalValue = Math.max(0, balance);
@@ -148,7 +206,7 @@ function calculateSWP() {
         depletionMsgEl.classList.remove('text-rose-400');
     }
 
-    updateChart(totalWithdrawn, finalValue);
+    updateChart(chartLabels, balanceData, withdrawnData);
 }
 
 // On DOM ready
