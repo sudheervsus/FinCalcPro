@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'/%3E%3C/svg%3E">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent vs Buy Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Decide between renting an apartment or buying one on a home loan with our advanced comparative financial model calculator.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://fincalcpro.app/calculators/rent-vs-buy/index.html">
+    <meta property="og:title" content="Rent vs Buy Calculator | FinCalcPro">
+    <meta property="og:description"
+        content="Decide between renting an apartment or buying one on a home loan with our advanced comparative financial model calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fincalcpro.app/calculators/rent-vs-buy/index.html">
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                FinCalcPro <span class="text-emerald-300">Wealth</span>
+            </a>
+            <div class="text-sm font-medium">Rent vs Buy Analyzer</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs & Sliders -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-4 mb-6">
+                    <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                </path>
+                            </svg>
+                        </span>
+                        Rent vs Buy Decision Matrix
+                    </h1>
+                </div>
+
+                <!-- Section 1: Property Buying Variables -->
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 h-divider">1. Buying Scenario
+                </h3>
+                <div class="space-y-6 mb-8">
+                    <!-- Property Value -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Property Value</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-400">₹</span>
+                                <input type="number" id="propInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="7500000" oninput="syncSlider('prop')">
+                            </div>
+                        </div>
+                        <input type="range" id="propSlider" min="1000000" max="100000000" step="100000" value="7500000"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('prop')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹10L</span>
+                            <span>₹10Cr</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Down payment % -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-slate-600">Down Payment</label>
+                                <div class="relative">
+                                    <input type="number" id="downInput"
+                                        class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                        value="20" step="1" oninput="syncSlider('down')">
+                                    <span class="absolute right-3 top-1 text-slate-400">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="downSlider" min="5" max="90" step="1" value="20"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                oninput="syncInput('down')">
+                        </div>
+
+                        <!-- Loan Rate -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-slate-600">Home Loan Rate p.a.</label>
+                                <div class="relative">
+                                    <input type="number" id="loanRateInput"
+                                        class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                        value="8.5" step="0.1" oninput="syncSlider('loanRate')">
+                                    <span class="absolute right-3 top-1 text-slate-400">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="loanRateSlider" min="5" max="15" step="0.1" value="8.5"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                oninput="syncInput('loanRate')">
+                        </div>
+                    </div>
+
+                    <!-- Appr / Tenure -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-slate-600">Prop. Appreciation
+                                    p.a.</label>
+                                <div class="relative">
+                                    <input type="number" id="apprInput"
+                                        class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                        value="5" step="0.5" oninput="syncSlider('appr')">
+                                    <span class="absolute right-3 top-1 text-slate-400">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="apprSlider" min="-2" max="15" step="0.5" value="5"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                oninput="syncInput('appr')">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-slate-600">Loan Tenure</label>
+                                <div class="relative">
+                                    <input type="number" id="tenureInput"
+                                        class="w-24 pl-2 pr-8 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                        value="20" oninput="syncSlider('tenure')">
+                                    <span class="absolute right-3 top-1 text-slate-400">Yr</span>
+                                </div>
+                            </div>
+                            <input type="range" id="tenureSlider" min="1" max="30" step="1" value="20"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                                oninput="syncInput('tenure')">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Renting -->
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4 h-divider">2. Renting Scenario
+                </h3>
+                <div class="space-y-6">
+                    <!-- Current Rent -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Current Monthly Rent</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-400">₹</span>
+                                <input type="number" id="rentInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-slate-50 border border-indigo-300 rounded text-right font-bold text-indigo-700 outline-none focus:ring-1 focus:ring-indigo-500"
+                                    value="25000" oninput="syncSlider('rent')">
+                            </div>
+                        </div>
+                        <input type="range" id="rentSlider" min="5000" max="500000" step="1000" value="25000"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                            oninput="syncInput('rent')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹5K</span>
+                            <span>₹5L</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Rent Incr -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-slate-600">Annual Rent Increase</label>
+                                <div class="relative">
+                                    <input type="number" id="rentIncInput"
+                                        class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-indigo-700 outline-none focus:ring-1 focus:ring-indigo-500"
+                                        value="5" step="0.5" oninput="syncSlider('rentInc')">
+                                    <span class="absolute right-3 top-1 text-slate-400">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="rentIncSlider" min="0" max="15" step="0.5" value="5"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                oninput="syncInput('rentInc')">
+                        </div>
+
+                        <!-- Invest Return -->
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="block text-sm font-semibold text-slate-600">Invst Return (Mutual
+                                    Funds)</label>
+                                <div class="relative">
+                                    <input type="number" id="invstInput"
+                                        class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-indigo-700 outline-none focus:ring-1 focus:ring-indigo-500"
+                                        value="10" step="0.5" oninput="syncSlider('invst')">
+                                    <span class="absolute right-3 top-1 text-slate-400">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="invstSlider" min="4" max="20" step="0.5" value="10"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                oninput="syncInput('invst')">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 shadow-sm text-sm text-indigo-900 leading-relaxed">
+                <h3 class="font-bold mb-2">How this Math works:</h3>
+                <p>This calculator determines the <strong>Net Worth</strong> you will have at the end of the selected
+                    tenure.</p>
+                <ul class="list-disc pl-5 mt-2 space-y-1 text-indigo-800">
+                    <li>If you <strong>buy</strong>: Net worth = (Appreciated Future Property Value) - (Remaining Loan
+                        Balance).</li>
+                    <li>If you <strong>rent</strong>: You keep the down payment and invest it. Plus, if the Loan EMI is
+                        higher than your Monthly Rent, you invest the difference every month. Net worth = (Value of
+                        these investments).</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <div
+                class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center flex flex-col items-center justify-center">
+                <p class="text-slate-400 text-sm font-medium uppercase tracking-wider mb-2">And the winner is...</p>
+                <div id="winnerBadge"
+                    class="bg-emerald-500 text-white font-extrabold text-2xl px-6 py-2 rounded-full mb-3 uppercase tracking-wider shadow-lg">
+                    Buying a Home
+                </div>
+                <p class="text-slate-300 text-sm mt-2">By the end of <span id="summaryTenure" class="font-bold">20
+                        Years</span>, you will be richer by</p>
+                <p class="text-3xl font-extrabold text-white mt-1" id="winnerDifference">₹0</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <!-- Data breakdown Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div
+                        class="p-4 bg-emerald-50 rounded-lg border border-emerald-100 flex flex-col items-center text-center">
+                        <p class="text-xs font-semibold text-emerald-600 uppercase">Net Worth if Buying</p>
+                        <p class="text-lg font-bold text-emerald-800 mt-1" id="buyNetWorthDisplay">₹0</p>
+                    </div>
+                    <div
+                        class="p-4 bg-indigo-50 rounded-lg border border-indigo-100 flex flex-col items-center text-center">
+                        <p class="text-xs font-semibold text-indigo-600 uppercase">Net Worth if Renting</p>
+                        <p class="text-lg font-bold text-indigo-800 mt-1" id="rentNetWorthDisplay">₹0</p>
+                    </div>
+                </div>
+
+                <!-- Bar Chart -->
+                <div class="relative h-64 w-full flex justify-center items-center">
+                    <canvas id="rentBuyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Ad Slot (Sidebar) -->
+            <div class="ad-slot h-64 rounded-xl w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm overflow-hidden"
+                id="AD_SLOT_SIDE">
+                <span>[ Sidebar Ad Unit ]</span>
+            </div>
+
+        </div>
+
+        <!-- Article & FAQ Section -->
+        <article class="col-span-1 lg:col-span-12 mt-8 mb-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">Rent vs Buy: The Ultimate Financial Dilemma</h2>
+                <div class="prose prose-slate max-w-none text-slate-600 mb-8">
+                    <p class="mb-4">"Should I buy a house or keep renting?" is perhaps the most debated financial
+                        question among young professionals. Emotional preferences aside, the math depends entirely on
+                        <em>opportunity costs</em>.</p>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-8">What exactly does this calculation do?</h3>
+                    <p class="mb-4">This isn't a simple "Rent vs EMI" comparison. This is a robust financial model
+                        plotting Net Worth accumulation over your loan's tenure.</p>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-600">
+                        <li><strong>The Buying Case:</strong> You part ways with your downpayment immediately, and pay a
+                            large EMI every month. Part of the EMI is bleeding (interest), but part is building equity
+                            (principal amount). Further, the house itself appreciates in value over the years. By the
+                            end, your loan balance shrinks to zero, and you own an appreciated asset.</li>
+                        <li><strong>The Renting Case:</strong> You save the massive Downpayment on Day 1. You put that
+                            in the market. Since your Monthly Rent is usually much cheaper than a Home Loan EMI would be
+                            for the exact same house, you intentionally invest the difference (EMI - Rent) every month
+                            into a mutual fund. Both the downpayment and SIP compound massively over the years.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-8">Key Variables to watch out for</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-600">
+                        <li><strong>Property Appreciation:</strong> If the house price rises massively (8-10% p.a.),
+                            buying almost always wins out purely because it is a leveraged investment (you get
+                            appreciation on the whole 100% house value using just 20% downpayment).</li>
+                        <li><strong>Rental Yield (Rent-to-Price ratio):</strong> In cities where apartment prices are 1
+                            Crore but rents are just 20,000/month (2.4% yield), renting is incredibly cheap
+                            mathematically, making the 'Renting' scenario highly lucrative if you properly invest the
+                            difference.</li>
+                    </ul>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Common FAQs</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">The calculator says Renting is better,
+                            should I not buy a house?</h4>
+                        <p class="text-slate-600 leading-relaxed">Math doesn't account for psychological safety and
+                            emotional satisfaction. Owning a house provides a sense of security against unpredictable
+                            landlords and unannounced eviction. If you plan to settle permanently in a city and want
+                            peace of mind, buying makes sense even if renting theoretically wins the math by a few
+                            lakhs.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">What if Renting wins because I set the
+                            "Investment Return" very high?</h4>
+                        <p class="text-slate-600 leading-relaxed">That's the flaw of the renting case—it assumes
+                            immense, unbroken financial discipline. It mathematically assumes you will diligently invest
+                            the difference of 'EMI minus Rent' completely into a high-yielding Equity mutual fund
+                            <em>every single month</em> for 20 years without fail. With buying a house, the EMI acts as
+                            <em>forced discipline</em>.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

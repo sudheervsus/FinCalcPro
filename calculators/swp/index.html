@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'/%3E%3C/svg%3E">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWP Calculator | FinCalcPro</title>
+    <meta name="description"
+        content="Calculate your Systematic Withdrawal Plan (SWP) returns, final balance, and how long your investment corpus will last with regular monthly withdrawals.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3477767345302374"
+        crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://fincalcpro.app/calculators/swp/index.html">
+    <meta property="og:title" content="SWP Calculator | FinCalcPro">
+    <meta property="og:description"
+        content="Calculate your Systematic Withdrawal Plan (SWP) returns, final balance, and how long your investment corpus will last with regular monthly withdrawals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fincalcpro.app/calculators/swp/index.html">
+</head>
+
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Navbar -->
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="../../index.html"
+                class="text-xl font-bold tracking-tight hover:text-indigo-100 transition-colors flex items-center gap-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                FinCalcPro <span class="text-emerald-300">Wealth</span>
+            </a>
+            <div class="text-sm font-medium">SWP Calculator</div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Left Column: Inputs & Sliders -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-4 mb-6">
+                    <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z">
+                                </path>
+                            </svg>
+                        </span>
+                        SWP Planner
+                    </h1>
+                </div>
+
+                <!-- Sliders -->
+                <div class="space-y-8">
+                    <!-- Total Investment -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Total Investment</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-400">₹</span>
+                                <input type="number" id="investmentInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="1000000" oninput="syncSlider('investment')">
+                            </div>
+                        </div>
+                        <input type="range" id="investmentSlider" min="50000" max="100000000" step="50000"
+                            value="1000000"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('investment')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹50K</span>
+                            <span>₹10 Cr</span>
+                        </div>
+                    </div>
+
+                    <!-- Withdrawal per month -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Withdrawal per month</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1 text-slate-400">₹</span>
+                                <input type="number" id="withdrawalInput"
+                                    class="w-32 pl-7 pr-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="10000" oninput="syncSlider('withdrawal')">
+                            </div>
+                        </div>
+                        <input type="range" id="withdrawalSlider" min="500" max="1000000" step="500" value="10000"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('withdrawal')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>₹500</span>
+                            <span>₹10L</span>
+                        </div>
+                    </div>
+
+                    <!-- Expected Return Rate -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Expected Return Rate (p.a)</label>
+                            <div class="relative">
+                                <input type="number" id="rateInput"
+                                    class="w-24 px-2 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="8" step="0.5" oninput="syncSlider('rate')">
+                                <span class="absolute right-3 top-1 text-slate-400">%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rateSlider" min="1" max="30" step="0.5" value="8"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('rate')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>1%</span>
+                            <span>30%</span>
+                        </div>
+                    </div>
+
+                    <!-- Time Period -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="block text-sm font-semibold text-slate-600">Time Period</label>
+                            <div class="relative">
+                                <input type="number" id="timeInput"
+                                    class="w-24 pl-2 pr-8 py-1 bg-slate-50 border border-slate-300 rounded text-right font-bold text-emerald-700 outline-none focus:ring-1 focus:ring-emerald-500"
+                                    value="5" oninput="syncSlider('time')">
+                                <span class="absolute right-3 top-1 text-slate-400">Yr</span>
+                            </div>
+                        </div>
+                        <input type="range" id="timeSlider" min="1" max="40" step="1" value="5"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                            oninput="syncInput('time')">
+                        <div class="flex justify-between mt-1 text-xs text-slate-400 font-medium">
+                            <span>1 Yr</span>
+                            <span>40 Yrs</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Content SEO text -->
+            <div
+                class="bg-emerald-50 p-6 rounded-xl border border-emerald-100 shadow-sm text-sm text-emerald-900 leading-relaxed">
+                <h3 class="font-bold mb-2">How Systematic Withdrawal Plans Work</h3>
+                <p>An SWP allows you to withdraw a fixed amount regularly from your total mutual fund investments. This
+                    is a common strategy to generate a steady monthly income post-retirement.</p>
+                <div class="mt-2 text-emerald-700"><strong>Note:</strong> If your withdrawal amount is higher than the
+                    interest generated, your principal corpus will deplete over time.</div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Visuals & Results -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+
+            <div class="bg-slate-900 rounded-xl shadow-lg border border-slate-700 p-6 text-white text-center">
+                <p class="text-slate-400 text-sm font-medium mb-1 uppercase tracking-wider">Final Value</p>
+                <p class="text-4xl lg:text-5xl font-extrabold text-emerald-400" id="finalValueDisplay">₹0</p>
+                <p class="text-xs text-slate-500 mt-2" id="depletionMessage">Corpus lasts full duration</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <!-- Data breakdown Grid -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-100 flex flex-col items-center">
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Total Investment</p>
+                        <p class="text-xl font-bold text-slate-800 mt-1" id="investedAmountDisplay">₹0</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-lg border border-emerald-100 flex flex-col items-center">
+                        <p class="text-xs font-semibold text-emerald-600 uppercase">Total Withdrawal</p>
+                        <p class="text-xl font-bold text-emerald-700 mt-1" id="totalWithdrawalDisplay">₹0</p>
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="relative h-64 w-full flex justify-center items-center">
+                    <canvas id="swpChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Ad Slot (Sidebar) -->
+            <div class="ad-slot h-64 rounded-xl w-full bg-slate-200 flex items-center justify-center text-slate-400 text-sm overflow-hidden"
+                id="AD_SLOT_SIDE">
+                <span>[ Sidebar Ad Unit ]</span>
+            </div>
+
+        </div>
+
+        <!-- Article & FAQ Section -->
+        <article class="col-span-1 lg:col-span-12 mt-8 mb-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">The Power of Systematic Withdrawal Plans (SWP)</h2>
+                <div class="prose prose-slate max-w-none text-slate-600 mb-8">
+                    <p class="mb-4">A Systematic Withdrawal Plan (SWP) in mutual funds is the exact opposite of a
+                        Systematic Investment Plan (SIP). Instead of investing a fixed amount regularly, you invest a
+                        lump sum and withdraw a fixed amount regularly (e.g., monthly). This acts as a reliable source
+                        of regular income from your investments.</p>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-8">How to use this SWP Calculator?</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-600">
+                        <li><strong>Enter Total Investment:</strong> Input the initial lump sum amount you have saved or
+                            plan to invest.</li>
+                        <li><strong>Withdrawal per month:</strong> State the fixed cash you wish to withdraw
+                            automatically every month.</li>
+                        <li><strong>Expected Return Rate (p.a):</strong> Enter a realistic annual return percentage that
+                            the invested fund is expected to yield.</li>
+                        <li><strong>Time Period:</strong> Input how many years you want to continue this withdrawal.
+                        </li>
+                        <li><strong>View Results:</strong> The calculator immediately updates to show you your "Total
+                            Withdrawal" over the time period along with the "Final Value" remaining in your corpus.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-8">Advantages of SWP</h3>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-slate-600">
+                        <li><strong>Consistent Income:</strong> Ideal for retirees seeking a predictable cash flow.</li>
+                        <li><strong>Tax Efficiency:</strong> SWP is very tax-efficient compared to Fixed Deposit
+                            interest because every withdrawal consists of both principal and capital gains, meaning tax
+                            is only applicable on the small portion of gains.</li>
+                        <li><strong>Continued Growth:</strong> The remainder of your corpus continues to grow and stay
+                            invested in the market.</li>
+                        <li><strong>Rupee Cost Averaging on Withdrawals:</strong> By redeeming fewer units when markets
+                            are high and more units when markets are low to fulfill the fixed cash need.</li>
+                    </ul>
+                </div>
+
+                <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Common FAQs</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">What happens if my withdrawal is too high?
+                        </h4>
+                        <p class="text-slate-600 leading-relaxed">If the sum of your withdrawals outpaces the returns
+                            generated, your initial principal amount will begin to deplete. The calculator will indicate
+                            if your fund is projected to run out completely before your selected time period ends.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-slate-800 mb-2">Who should use an SWP?</h4>
+                        <p class="text-slate-600 leading-relaxed">SWPs are extremely useful for retirees or individuals
+                            looking to achieve Financial Independence (FIRE) by generating passive income from their
+                            long-term saving corpus.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-6 text-sm mt-auto text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
