@@ -4,3 +4,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; }
 .schedule-row:hover { background-color: #f1f5f9; }
+
+/* Hide ad slots temporarily until AdSense approval */
+.ad-slot, [id^="AD_SLOT"] { display: none !important; }
