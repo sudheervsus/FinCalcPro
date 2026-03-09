@@ -20,9 +20,6 @@
     <meta property="og:description" content="Calculate potential savings when switching your home loan or personal loan to a new lender with a lower interest rate, accounting for transfer fees.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fincalcpro.app/calculators/balance-transfer/index.html">
-    <link rel="manifest" href="../../manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
 <body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
@@ -254,16 +251,6 @@
     </script>
     <script src="script.js"></script>
 
-    <!-- PWA Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('../../serviceWorker.js')
-                    .then(reg => console.log('SW Registered', reg))
-                    .catch(err => console.error('SW Registration failed', err));
-            });
-        }
-    </script>
     
 </body>
 

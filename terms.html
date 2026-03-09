@@ -18,9 +18,6 @@
     <meta property="og:description" content="Read the Terms of Service for FinCalcPro. Understand the rules and guidelines for using our financial tools.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fincalcpro.app/terms.html">
-    <link rel="manifest" href="./manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
@@ -98,16 +95,6 @@
     </footer>
     <script>if (document.getElementById('currentYear')) document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
 
-    <!-- PWA Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./serviceWorker.js')
-                    .then(reg => console.log('SW Registered', reg))
-                    .catch(err => console.error('SW Registration failed', err));
-            });
-        }
-    </script>
     
 </body>
 
