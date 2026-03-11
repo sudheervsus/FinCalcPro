@@ -7,18 +7,18 @@ function initChart() {
     const ctx = document.getElementById('prepaymentChart').getContext('2d');
 
     const data = {
-        labels: ['Original Loan', 'Revised Loan'],
+        labels: ['Original Loan', 'Opt 1 (Tenure)', 'Opt 2 (EMI)'],
         datasets: [
             {
                 label: 'Total Interest',
-                data: [50, 40],
-                backgroundColor: '#ef4444', // red-500
+                data: [50, 40, 45],
+                backgroundColor: ['#ef4444', '#10b981', '#4f46e5'], // red-500, emerald-500, indigo-600
                 borderWidth: 0,
                 borderRadius: { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 }
             },
             {
                 label: 'Principal Loan',
-                data: [100, 100],
+                data: [100, 100, 100],
                 backgroundColor: '#94a3b8', // slate-400
                 borderWidth: 0,
                 borderRadius: { topLeft: 0, topRight: 0, bottomLeft: 4, bottomRight: 4 }
@@ -77,10 +77,10 @@ function initChart() {
 }
 
 // Update the chart with new data
-function updateChart(principal, originalInterest, revisedInterest) {
+function updateChart(principal, originalInterest, revisedInterest1, revisedInterest2) {
     if (prepaymentChartInstance) {
-        prepaymentChartInstance.data.datasets[0].data = [originalInterest, revisedInterest];
-        prepaymentChartInstance.data.datasets[1].data = [principal, principal];
+        prepaymentChartInstance.data.datasets[0].data = [originalInterest, revisedInterest1, revisedInterest2];
+        prepaymentChartInstance.data.datasets[1].data = [principal, principal, principal];
         prepaymentChartInstance.update();
     }
 }
@@ -150,46 +150,85 @@ function calculatePrepayment() {
     document.getElementById('originalInterestDisplay').textContent = formatRupee(originalInterest);
     document.getElementById('originalMonthsDisplay').textContent = n;
 
-    // 2. Revised Scenario
-    let balance = P - lump;
-    let revisedInterest = 0;
-    let revisedN = 0;
+    // --- Option 1: Reduce Tenure (Keep Base EMI same) ---
+    let balance1 = P - lump;
+    let revisedInterest1 = 0;
+    let revisedN1 = 0;
 
-    // Amortization loop
-    for (let i = 1; i <= n * 2; i++) { // safety limit
-        if (balance <= 0) break;
-
-        let interestForMonth = balance * r;
+    // Amortization loop for Option 1
+    for (let i = 1; i <= n * 2; i++) {
+        if (balance1 <= 0) break;
+        let interestForMonth = balance1 * r;
         let expectedTotalPayment = emi + extraMonthly;
 
-        if (balance + interestForMonth <= expectedTotalPayment) {
-            // Final month
-            revisedInterest += interestForMonth;
-            balance = 0;
-            revisedN = i;
+        if (balance1 + interestForMonth <= expectedTotalPayment) {
+            revisedInterest1 += interestForMonth;
+            balance1 = 0;
+            revisedN1 = i;
             break;
         } else {
-            revisedInterest += interestForMonth;
+            revisedInterest1 += interestForMonth;
             let principalForMonth = expectedTotalPayment - interestForMonth;
-            balance -= principalForMonth;
-            revisedN = i;
+            balance1 -= principalForMonth;
+            revisedN1 = i;
         }
     }
 
-    // Safety checks for UI displaying negatives
-    let interestSaved = originalInterest - revisedInterest;
-    let monthsSaved = n - revisedN;
-    if (interestSaved < 0) interestSaved = 0;
+    let interestSaved1 = originalInterest - revisedInterest1;
+    let monthsSaved = n - revisedN1;
+    if (interestSaved1 < 0) interestSaved1 = 0;
     if (monthsSaved < 0) monthsSaved = 0;
 
-    // Output to UI
-    document.getElementById('revisedInterestDisplay').textContent = formatRupee(revisedInterest);
-    document.getElementById('revisedMonthsDisplay').textContent = revisedN;
-
-    document.getElementById('interestSavedDisplay').textContent = formatRupee(interestSaved);
+    document.getElementById('revisedInterestDisplay1').textContent = formatRupee(revisedInterest1);
+    document.getElementById('revisedMonthsDisplay1').textContent = revisedN1;
+    document.getElementById('interestSavedDisplay1').textContent = formatRupee(interestSaved1);
     document.getElementById('tenureSavedDisplay').textContent = formatMonthsToYears(monthsSaved);
+    document.getElementById('newEmiDisplay1').textContent = formatRupee(emi + extraMonthly);
 
-    updateChart(P, originalInterest, revisedInterest);
+    // --- Option 2: Reduce EMI (Keep Tenure same) ---
+    let balance2 = P - lump;
+    
+    // Recalculate base EMI for the new balance over the original remaining tenure
+    let newBaseEmiOption2 = 0;
+    if (balance2 > 0 && r > 0 && n > 0) {
+        newBaseEmiOption2 = balance2 * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    }
+
+    let revisedInterest2 = 0;
+    let revisedN2 = 0;
+
+    // Re-run amortization with new base EMI + extraMonthly
+    for (let i = 1; i <= n * 2; i++) {
+        if (balance2 <= 0) break;
+        let interestForMonth = balance2 * r;
+        let expectedTotalPayment = newBaseEmiOption2 + extraMonthly;
+
+        if (balance2 + interestForMonth <= expectedTotalPayment) {
+            revisedInterest2 += interestForMonth;
+            balance2 = 0;
+            revisedN2 = i;
+            break;
+        } else {
+            revisedInterest2 += interestForMonth;
+            let principalForMonth = expectedTotalPayment - interestForMonth;
+            balance2 -= principalForMonth;
+            revisedN2 = i;
+        }
+    }
+
+    let interestSaved2 = originalInterest - revisedInterest2;
+    if (interestSaved2 < 0) interestSaved2 = 0;
+
+    let emiReducedBy = emi - newBaseEmiOption2;
+    if (emiReducedBy < 0) emiReducedBy = 0;
+
+    document.getElementById('revisedInterestDisplay2').textContent = formatRupee(revisedInterest2);
+    document.getElementById('revisedMonthsDisplay2').textContent = revisedN2;
+    document.getElementById('interestSavedDisplay2').textContent = formatRupee(interestSaved2);
+    document.getElementById('emiReducedDisplay').textContent = formatRupee(emiReducedBy);
+    document.getElementById('newEmiDisplay2').textContent = formatRupee(newBaseEmiOption2 + extraMonthly);
+
+    updateChart(P, originalInterest, revisedInterest1, revisedInterest2);
 }
 
 // Ensure Lumpsum slider max updates if Principal changes
