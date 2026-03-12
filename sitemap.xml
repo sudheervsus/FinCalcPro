@@ -52,73 +52,73 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/balance-transfer/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/balance-transfer/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/emi/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/emi/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/step-up-sip/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/step-up-sip/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/retirement/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/retirement/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/compound-interest/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/compound-interest/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/tax/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/tax/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/nps/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/nps/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/gold-loan/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/gold-loan/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/fire/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/fire/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/lumpsum/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/lumpsum/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/sip/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/sip/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://fincalcpro.app/calculators/ppf/index.html</loc>
+    <loc>https://fincalcpro.app/calculators/ppf/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
     <url>
-        <loc>https://fincalcpro.app/calculators/ppf-withdrawal/index.html</loc>
+        <loc>https://fincalcpro.app/calculators/ppf-withdrawal/</loc>
         <lastmod>2026-03-09</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://fincalcpro.app/calculators/nps-withdrawal/index.html</loc>
+        <loc>https://fincalcpro.app/calculators/nps-withdrawal/</loc>
         <lastmod>2026-03-11</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
