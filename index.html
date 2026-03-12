@@ -22,12 +22,12 @@
             visibility: visible;
         }
     </style>
-    <link rel="canonical" href="https://fincalcpro.app/index.html">
+    <link rel="canonical" href="https://fincalcpro.app/">
     <meta property="og:title" content="FinCalcPro - Your Comprehensive Financial Hub">
     <meta property="og:description"
         content="Advanced financial calculators for loans, investments, retirement, and tax planning. Master your finances today.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fincalcpro.app/index.html">
+    <meta property="og:url" content="https://fincalcpro.app/">
 </head>
 
 <body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
@@ -713,6 +713,40 @@
                     </a>
                 </div>
             </section>
+            <!-- 5. Knowledge Hub (Guides) -->
+            <section id="knowledge" class="scroll-mt-24">
+                <h2
+                    class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b border-slate-200 pb-2">
+                    <span class="bg-amber-100 text-amber-600 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                    </span>
+                    Financial Knowledge Hub
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="guides/home-loan-prepayment.html"
+                        class="block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md hover:border-amber-300 transition-all">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Home Loan Prepayment Guide</h3>
+                        <p class="text-sm text-slate-500">Master the art of saving lakhs in interest with strategic prepayments.</p>
+                        <span class="text-indigo-600 text-xs font-bold mt-4 inline-block">Read Article &rarr;</span>
+                    </a>
+                    <a href="guides/financial-year.html"
+                        class="block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md hover:border-amber-300 transition-all">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">The Indian Financial Year</h3>
+                        <p class="text-sm text-slate-500">Why April-March cycle is critical for your tax planning and reporting.</p>
+                        <span class="text-indigo-600 text-xs font-bold mt-4 inline-block">Read Article &rarr;</span>
+                    </a>
+                    <a href="guides/emi-formula.html"
+                        class="block bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md hover:border-amber-300 transition-all">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">EMI Calculation Decoded</h3>
+                        <p class="text-sm text-slate-500">Deep dive into the PR(1+R)^N formula used by banks globally.</p>
+                        <span class="text-indigo-600 text-xs font-bold mt-4 inline-block">Read Article &rarr;</span>
+                    </a>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -735,25 +769,37 @@
                     </svg>
                     FinCalcPro
                 </a>
-                <p class="text-slate-500 max-w-sm">Disclaimer: Calculations are for informational purposes strictly.
-                    Consult a licensed financial professional before making critical financial decisions.</p>
-                <p class="mt-4">&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved.</p>
+                <p class="text-slate-500 max-w-sm">Precision financial tools for the modern investor. Built for clarity, powered by math.</p>
+                <div class="mt-6">
+                    <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-[10px]">Popular Tools</h4>
+                    <div class="flex flex-wrap gap-x-4 gap-y-2 text-xs">
+                        <a href="calculators/emi/index.html" class="hover:text-white transition">EMI Calculator</a>
+                        <a href="calculators/sip/index.html" class="hover:text-white transition">SIP Calculator</a>
+                        <a href="calculators/tax/index.html" class="hover:text-white transition">Income Tax</a>
+                        <a href="calculators/ppf/index.html" class="hover:text-white transition">PPF Calculator</a>
+                        <a href="calculators/fd/index.html" class="hover:text-white transition">FD Calculator</a>
+                        <a href="calculators/nps/index.html" class="hover:text-white transition">NPS Calculator</a>
+                        <a href="calculators/salary/index.html" class="hover:text-white transition">Salary In-Hand</a>
+                    </div>
+                </div>
+                <p class="mt-8 text-[10px] text-slate-600">&copy; <span id="currentYear"></span> FinCalcPro. All rights reserved. Calculations are for information only. Consult a professional.</p>
             </div>
 
             <div>
-                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Categories</h4>
+                <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Tools & Guides</h4>
                 <ul class="space-y-2">
                     <li><a href="#borrowing" class="hover:text-white transition-colors">Loan Tools</a></li>
                     <li><a href="#growing" class="hover:text-white transition-colors">Wealth & Investment</a></li>
-                    <li><a href="#future" class="hover:text-white transition-colors">Retirement</a></li>
-                    <li><a href="#efficiency" class="hover:text-white transition-colors">Tax & Savings</a></li>
+                    <li><a href="#future" class="hover:text-white transition-colors">Retirement Planning</a></li>
+                    <li><a href="#efficiency" class="hover:text-white transition-colors">Tax Efficiency</a></li>
+                    <li><a href="#knowledge" class="hover:text-white transition-colors">Financial Guides</a></li>
                 </ul>
             </div>
 
             <div>
                 <h4 class="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Company</h4>
                 <ul class="space-y-2">
-                    <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
                     <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
                     <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
                     <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
