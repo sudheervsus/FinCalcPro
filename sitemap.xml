@@ -125,7 +125,7 @@
     </url>
     <url>
         <loc>https://fincalcpro.app/blog/</loc>
-        <lastmod>2026-03-14</lastmod>
+        <lastmod>2026-03-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -138,6 +138,18 @@
     <url>
         <loc>https://fincalcpro.app/blog/ppf-vs-sip-comparison.html</loc>
         <lastmod>2026-03-14</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://fincalcpro.app/blog/is-your-little-treat-habit-debt.html</loc>
+        <lastmod>2026-03-16</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://fincalcpro.app/blog/fire-your-financial-planner-ai-investing.html</loc>
+        <lastmod>2026-03-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
